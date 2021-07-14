@@ -1,0 +1,9 @@
+# -*- coding: utf-8 -*-
+
+import sys
+
+sys.path.append('C:/Users/usf/Python/Morphoa')
+
+import doe_config
+
+doe_config.main()
