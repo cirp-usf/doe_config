@@ -1,5 +1,7 @@
 import Part
+import FreeCAD as App
 from FreeCAD import Base
+import FreeCADGui as Gui
 import math
 from math import pi
 import PySide
@@ -4032,7 +4034,7 @@ class Ui_MainWindow(object):
 MainWindow = QtGui.QMainWindow()
 ui = Ui_MainWindow()
 ui.setupUi(MainWindow)
-MainWindow.show()
+#MainWindow.show()
 
 
 
@@ -4046,8 +4048,8 @@ def clearAll():
 
 
 #Show parts in a nice View
-App.activeDocument().recompute()
-Gui.activeDocument().activeView().viewAxometric()
-Gui.SendMsgToActiveView("ViewFit")
+#App.activeDocument().recompute()
+#Gui.activeDocument().activeView().viewAxometric()
+#Gui.SendMsgToActiveView("ViewFit")
 
 
