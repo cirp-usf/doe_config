@@ -18,7 +18,7 @@ def clearAll():
 
 
 
-def make_parts(self, csv_filename):						#Plot Part
+def make_parts(csv_filename):						#Plot Part
     #Definition of Values
     csvdatei = open(csv_filename,"r")
     csv_reader = csv.reader(csvdatei, delimiter=';')

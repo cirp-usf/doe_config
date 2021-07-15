@@ -11,6 +11,8 @@ import time
 import csv
 import shutil
 
+from .cad import make_parts
+
 #Create new document
 App.newDocument("Assembly")
 App.setActiveDocument("Assembly")
@@ -1122,8 +1124,7 @@ class Ui_MainWindow(object):
         csv_writer.writerow([Height,Width,DL,Thickness,LHD,RodLength,LensBin,LL,DLL,comp,format,Mount])
 
         csvdatei.close()    
-        a=10
-        self.Darstellung(a)         
+        make_parts(csv_filename)         
         e=self.cb2.currentIndex()
         l=self.cb1.currentIndex()
         if e==0 and l==0:
@@ -1134,7 +1135,7 @@ class Ui_MainWindow(object):
             import Mesh
             '''
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("DOE_Holder1"))
+            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder1"))
             save="%s/DOE_Holder1.stl" %comp
             Mesh.export(__objs__,save)
             del __objs__
@@ -1143,28 +1144,28 @@ class Ui_MainWindow(object):
             destination = "%s/DOE_Holder1_new.stl" %comp
             shutil.copy(source,destination)
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("DOE_Holder3"))
+            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder3"))
             #import Mesh
             save="%s/DOE_Holder3.stl" %comp
             Mesh.export(__objs__,save)
             print(save)
             del __objs__
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("LensHolder"))
+            __objs__.append(App.getDocument("Assembly").getObject("LensHolder"))
             #import Mesh
             save="%s/LensHolder.stl" %comp
             Mesh.export(__objs__,save)
             print(save)
             del __objs__
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("LaserHolder1"))
+            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder1"))
             #import Mesh
             save="%s/LaserHolder1.stl" %comp
             Mesh.export(__objs__,save)
             print(save)
             del __objs__
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("LaserHolder2"))
+            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder2"))
             #import Mesh
             save="%s/LaserHolder2.stl" %comp
             Mesh.export(__objs__,save)
@@ -1172,7 +1173,7 @@ class Ui_MainWindow(object):
             del __objs__
             '''
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("cap"))
+            __objs__.append(App.getDocument("Assembly").getObject("cap"))
             #import Mesh
             save="%s/cap.stl" %comp
             Mesh.export(__objs__,save)
@@ -1183,7 +1184,7 @@ class Ui_MainWindow(object):
             destination = "%s/cap_new.stl" %comp
             shutil.copy(source,destination)
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("Mount_Shroud"))
+            __objs__.append(App.getDocument("Assembly").getObject("Mount_Shroud"))
             #import Mesh
             save="%s/MountShroud.stl" %comp
             Mesh.export(__objs__,save)
@@ -1198,7 +1199,7 @@ class Ui_MainWindow(object):
             import Mesh
             '''
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("DOE_Holder1"))
+            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder1"))
             save="%s/DOE_Holder1.stl" %comp
             Mesh.export(__objs__,save)
             del __objs__
@@ -1207,21 +1208,21 @@ class Ui_MainWindow(object):
             destination = "%s/DOE_Holder1_new.stl" %comp
             shutil.copy(source,destination)
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("DOE_Holder3"))
+            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder3"))
             #import Mesh
             save="%s/DOE_Holder3.stl" %comp
             Mesh.export(__objs__,save)
             print(save)
             del __objs__
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("LaserHolder1"))
+            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder1"))
             #import Mesh
             save="%s/LaserHolder1.stl" %comp
             Mesh.export(__objs__,save)
             print(save)
             del __objs__
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("LaserHolder2"))
+            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder2"))
             #import Mesh
             save="%s/LaserHolder2.stl" %comp
             Mesh.export(__objs__,save)
@@ -1229,7 +1230,7 @@ class Ui_MainWindow(object):
             del __objs__
             '''
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("cap"))
+            __objs__.append(App.getDocument("Assembly").getObject("cap"))
             #import Mesh
             save="%s/cap.stl" %comp
             Mesh.export(__objs__,save)
@@ -1240,7 +1241,7 @@ class Ui_MainWindow(object):
             destination = "%s/cap_new.stl" %comp
             shutil.copy(source,destination)
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("Mount_Shroud"))
+            __objs__.append(App.getDocument("Assembly").getObject("Mount_Shroud"))
             #import Mesh
             save="%s/MountShroud.stl" %comp
             Mesh.export(__objs__,save)
@@ -1257,7 +1258,7 @@ class Ui_MainWindow(object):
             shutil.copy(source,destination)
             '''
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("DOE_Holder1"))
+            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder1"))
             import ImportGui
             save="%s/DOE_Holder1.step" %comp
             ImportGui.export(__objs__,save)
@@ -1265,7 +1266,7 @@ class Ui_MainWindow(object):
             del __objs__
             '''
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("DOE_Holder3"))
+            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder3"))
             import ImportGui
             save="%s/DOE_Holder3.step" %comp
             ImportGui.export(__objs__,save)
@@ -1273,21 +1274,21 @@ class Ui_MainWindow(object):
             print(save)
             del __objs__
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("LensHolder"))
+            __objs__.append(App.getDocument("Assembly").getObject("LensHolder"))
             #import ImportGui
             save="%s/LensHolder.step" %comp
             ImportGui.export(__objs__,save)
             print(save)
             del __objs__
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("LaserHolder1"))
+            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder1"))
             #import ImportGui
             save="%s/LaserHolder1.step" %comp
             ImportGui.export(__objs__,save)
             print(save)
             del __objs__
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("LaserHolder2"))
+            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder2"))
             #import ImportGui
             save="%s/LaserHolder2.step" %comp
             ImportGui.export(__objs__,save)
@@ -1295,7 +1296,7 @@ class Ui_MainWindow(object):
             del __objs__
             '''
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("cap"))
+            __objs__.append(App.getDocument("Assembly").getObject("cap"))
             #import ImportGui
             save="%s/cap.step" %comp
             ImportGui.export(__objs__,save)
@@ -1306,7 +1307,7 @@ class Ui_MainWindow(object):
             destination = "%s/cap_new.step" %comp
             shutil.copy(source,destination)
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("Mount_Shroud"))
+            __objs__.append(App.getDocument("Assembly").getObject("Mount_Shroud"))
             #import ImportGui
             save="%s/Mount_Shroud.step" %comp
             ImportGui.export(__objs__,save)
@@ -1322,7 +1323,7 @@ class Ui_MainWindow(object):
             shutil.copy(source,destination)
             '''
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("DOE_Holder1"))
+            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder1"))
             import ImportGui
             save="%s/DOE_Holder1.step" %comp
             ImportGui.export(__objs__,save)
@@ -1330,7 +1331,7 @@ class Ui_MainWindow(object):
             del __objs__
             '''
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("DOE_Holder3"))
+            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder3"))
             import ImportGui
             save="%s/DOE_Holder3.step" %comp
             ImportGui.export(__objs__,save)
@@ -1338,14 +1339,14 @@ class Ui_MainWindow(object):
             print(save)
             del __objs__
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("LaserHolder1"))
+            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder1"))
             #import ImportGui
             save="%s/LaserHolder1.step" %comp
             ImportGui.export(__objs__,save)
             print(save)
             del __objs__
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("LaserHolder2"))
+            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder2"))
             #import ImportGui
             save="%s/LaserHolder2.step" %comp
             ImportGui.export(__objs__,save)
@@ -1353,7 +1354,7 @@ class Ui_MainWindow(object):
             del __objs__
             '''
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("cap"))
+            __objs__.append(App.getDocument("Assembly").getObject("cap"))
             #import ImportGui
             save="%s/cap.step" %comp
             ImportGui.export(__objs__,save)
@@ -1364,7 +1365,7 @@ class Ui_MainWindow(object):
             destination = "%s/cap_new.step" %comp
             shutil.copy(source,destination)
             __objs__=[]
-            __objs__.append(FreeCAD.getDocument("Assembly").getObject("Mount_Shroud"))
+            __objs__.append(App.getDocument("Assembly").getObject("Mount_Shroud"))
             #import ImportGui
             save="%s/Mount_Shroud.step" %comp
             ImportGui.export(__objs__,save)
@@ -1446,8 +1447,7 @@ class Ui_MainWindow(object):
         self.cb3.setCurrentText("200")
         self.cb4.setCurrentText("2x, 180°")
         print( "Reset")
-        a=10
-        self.Darstellung(a)        
+        make_parts(csv_filename)        
 
 
     def on_pushButton_4_clicked(self):    # Button Apply                                    # connection on_pushButton_4_clicked
@@ -1516,8 +1516,7 @@ class Ui_MainWindow(object):
 
         csvdatei.close()        
 
-        a=10
-        self.Darstellung(a)
+        make_parts(csv_filename)
 
     def on_pushButton_5_clicked(self):    # make Suggestion for Laser                                     # connection on_pushButton_2_clicked
         #
