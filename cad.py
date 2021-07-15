@@ -9,6 +9,8 @@ import csv
 
 
 
+doc_name = 'Assembly' 
+
 
 #Function to clear Window
 def clearAll():
@@ -16,7 +18,18 @@ def clearAll():
     for obj in doc.Objects:
         doc.removeObject(obj.Label)
 
+def create_doc():
+    # Only create new document if one does not yet exist
+    if doc_name not in App.listDocuments():
+        App.newDocument(doc_name)
 
+    App.setActiveDocument(doc_name)
+    App.ActiveDocument = App.getDocument(doc_name)
+    Gui.ActiveDocument = Gui.getDocument(doc_name)
+
+def close_document():
+    if doc_name in App.listDocuments():
+        App.closeDocument(doc_name)
 
 def make_parts(csv_filename):						#Plot Part
     #Definition of Values
@@ -43,6 +56,8 @@ def make_parts(csv_filename):						#Plot Part
     
     csvdatei.close()
 
+    create_doc()
+    
     clearAll()
     ###Part-Code###############################################################
     ###DOE-Holder1###############################################################

@@ -1,17 +1,11 @@
 import FreeCAD as App
-import FreeCADGui as Gui
 import PySide
 from PySide import QtCore, QtGui
 import csv
 import shutil
 
-from .cad import make_parts
+from .cad import make_parts, close_document
 
-#Create new document
-App.newDocument("Assembly")
-App.setActiveDocument("Assembly")
-App.ActiveDocument=App.getDocument("Assembly")
-Gui.ActiveDocument=Gui.getDocument("Assembly")
 
 global switch ; switch = 0
 
@@ -1378,10 +1372,7 @@ class Ui_MainWindow(object):
         #
     def on_pushButton_2_clicked(self):    # Button Quit                                     # connection on_pushButton_2_clicked
         #
-        App.closeDocument("Assembly")
-        App.setActiveDocument("")
-        App.ActiveDocument=None
-        Gui.ActiveDocument=None
+        close_document()
         #
         self.pushButton_1.setStyleSheet("background-color: QPalette.Base")                  # origin system color pushButton_1
         App.Console.PrintMessage("End\r\n")
