@@ -185,7 +185,7 @@ def make_parts(csv_filename):						#Plot Part
     #Definition
     HoleTolerance=0
     RectangleTolerance=0
-    ToleranceNubble=0
+    #ToleranceNubble=0
 
 
 	        

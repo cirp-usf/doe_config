@@ -1,13 +1,7 @@
-import Part
 import FreeCAD as App
-from FreeCAD import Base
 import FreeCADGui as Gui
-import math
-from math import pi
 import PySide
 from PySide import QtCore, QtGui
-import os
-import time
 import csv
 import shutil
 
@@ -716,20 +710,16 @@ class Ui_MainWindow(object):
         #
 
     def selectionchange1 (self):
-        e=10						#Random Value to give function the needed arguments
-        #self.Darstellung(e)
+        pass
 
     def selectionchange2 (self):
-        e=10						#Random Value to give function the needed arguments
-        #self.Darstellung(e)
+        pass
 
     def selectionchange3 (self):
-        e=10						#Random Value to give function the needed arguments
-        #self.Darstellung(e)
+        pass
 
     def selectionchange4 (self):
-        e=10						#Random Value to give function the needed arguments
-        #self.Darstellung(e)
+        pass
 
 ########################################################################
         
@@ -955,7 +945,7 @@ class Ui_MainWindow(object):
             self.horizontalSlider6.setValue(val_LaserLength*10)                                      # affect the value "val_X" on horizontalSlider and modify this
         except Exception:                                                                   # if error
             self.horizontalSlider6.setValue(0)                                          # affect the value "0" on horizontalSlider and modify this
-            val_LaserDiameter = "0"
+            val_LaserLength = "0"
         print( val_LaserLength)
         #
 
@@ -1079,7 +1069,7 @@ class Ui_MainWindow(object):
         LL = round(LL,1)
         DLL = float(self.lineEdit_8.text())
         DLL = round(DLL,1)
-        DOED=25.4
+        #DOED=25.4
         RodIndex=self.cb3.currentIndex()
         if RodIndex==0:
             RodLength = 200
@@ -1468,7 +1458,7 @@ class Ui_MainWindow(object):
         Thickness = round(Thickness,1)
         LHD = float(self.lineEdit_6.text())
         LHD = round(LHD,1)
-        DOED=25.4
+        #DOED=25.4
         LL = float(self.lineEdit_7.text())
         LL = round(LL,1)
         DLL = float(self.lineEdit_8.text())
