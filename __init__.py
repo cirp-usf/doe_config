@@ -4,5 +4,7 @@
 
 from .gui import MainWindow
 
+doc_name = 'Assembly'
+
 def main():
     MainWindow.show()

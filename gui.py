@@ -1,22 +1,27 @@
 import FreeCAD as App
+import Mesh
+import ImportGui
 import PySide
 from PySide import QtCore, QtGui
 import csv
 import shutil
+import os.path
 
 from .cad import make_parts, close_document
-
+from . import __path__, doc_name
 
 global switch ; switch = 0
 
 csv_filename = '/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei_write.csv'
 csv_filename = '/Users/usf/Morphoa/Steffen/testdatei_write.csv'
 
-source_path = r'C:\Users\usf\Morphoa\Steffen' + '\\' 
+source_path = os.path.join(__path__, 'step')
+source_path = os.path.normpath(source_path)
 
 doe_halter_filename = 'DOE-Halter_01_D25___V05'
 deckel_filename = 'Deckel___V03'
- 
+
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -32,6 +37,9 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
  
 class Ui_MainWindow(object):
+    def __init__(self):
+        self.old_params = None
+    
     def setupUi(self, MainWindow):
         self.window = MainWindow
         global switch
@@ -1045,9 +1053,7 @@ class Ui_MainWindow(object):
         print( val_WorkingDistance)
         #
 
-    # Buttons
-    def on_pushButton_3_clicked(self):    # Button Save                                     # connection on_pushButton_3_clicked
-        #
+    def read_parameters_and_save(self, filename):
         #Definition of Values
         Height = float(self.lineEdit_1.text())
         Height = round(Height,1)
@@ -1081,281 +1087,104 @@ class Ui_MainWindow(object):
 
         e=self.cb1.currentIndex()
         if e==0:
-            print("yes")
-            LensBin=1
+            print("Lens yes")
+            LensBin = 1
         
         elif e==1:
-            print("no")
-            LensBin=0
+            print("Lens no")
+            LensBin = 0
 
 
         comp = self.lineEdit_2.text()
         g=self.cb2.currentIndex()
         if g==0:
-            format=".stl"
+            format_ = ".stl"
         elif g==1:
-            format=".step"
+            format_ = ".step"
         elif g==2:
-            format=".FreeCAD"
+            format_ = ".FreeCAD"
             
 
-        #filename = "C:/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei.csv"
-        #csvdatei = open('/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei.csv',"r",encoding="latin-1")
-        csvdatei = open(csv_filename,"w", newline='')
+        csvdatei = open(filename,"w", newline='')
         csv_writer = csv.writer(csvdatei, delimiter=';')
-        #csv_reader_object = csv.reader(csvdatei)
+
         csv_writer.writerow(["DOE Hole Width","DOE Hole Height","Lens Diameter","Lens Holder Depth","Laser Diameter","Rod Length","Lens","Laser Length", "Dist. Laser Lens", "comp. location","file format","mounting"])
-        csv_writer.writerow([Height,Width,DL,Thickness,LHD,RodLength,LensBin,LL,DLL,comp,format,Mount])
+        csv_writer.writerow([Height,Width,DL,Thickness,LHD,RodLength,LensBin,LL,DLL,comp,format_,Mount])
 
         csvdatei.close()    
-        make_parts(csv_filename)         
+        new_params = ( 
+                Width,
+                Height,
+                DL,
+                Thickness,
+                LHD,
+                RodLength,
+                LensBin,
+                LL,
+                DLL,
+                Mount,
+                )
+        if self.old_params is None:
+            params_changed = True
+        else:
+            params_changed = False
+            for p1, p2 in zip(self.old_params, new_params):
+                if p1 != p2:
+                    params_changed = True
+                    break
+        self.old_params = new_params
+        return params_changed
+
+    # Buttons
+    def on_pushButton_3_clicked(self):    # Button Save                                     # connection on_pushButton_3_clicked
+        changed = self.read_parameters_and_save(csv_filename)
+        if changed:
+            # Only recompute parts if parameters changed
+            make_parts(csv_filename)
+
         e=self.cb2.currentIndex()
         l=self.cb1.currentIndex()
-        if e==0 and l==0:
-            
-            print(".stl")
-            comp = self.lineEdit_2.text()                                                      # extract the string in the lineEdit
-            self.lineEdit_2.setText(str(comp))
-            import Mesh
-            '''
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder1"))
-            save="%s/DOE_Holder1.stl" %comp
-            Mesh.export(__objs__,save)
-            del __objs__
-            '''
-            source = source_path + doe_halter_filename + '.STL'
+        comp = self.lineEdit_2.text()
+        self.lineEdit_2.setText(str(comp))
+        parts_list = ['DOE_Holder3', 'LaserHolder1', 'LaserHolder2', 'Mount_Shroud']
+        if l == 0:
+            parts_list.append('LensHolder')
+        if e == 0:
+            print("Format STL")
+
+            source = os.path.join(source_path, doe_halter_filename + '.STL')
             destination = "%s/DOE_Holder1_new.stl" %comp
             shutil.copy(source,destination)
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder3"))
-            #import Mesh
-            save="%s/DOE_Holder3.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("LensHolder"))
-            #import Mesh
-            save="%s/LensHolder.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder1"))
-            #import Mesh
-            save="%s/LaserHolder1.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder2"))
-            #import Mesh
-            save="%s/LaserHolder2.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
-            '''
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("cap"))
-            #import Mesh
-            save="%s/cap.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
-            '''
-            source = source_path + deckel_filename + '.STL'
+
+            source = os.path.join(source_path, deckel_filename + '.STL')
             destination = "%s/cap_new.stl" %comp
             shutil.copy(source,destination)
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("Mount_Shroud"))
-            #import Mesh
-            save="%s/MountShroud.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
-    
-        elif e==0 and l==1:
-            
-            print(".stl")
-            comp = self.lineEdit_2.text()                                                      # extract the string in the lineEdit
-            self.lineEdit_2.setText(str(comp))
-            import Mesh
-            '''
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder1"))
-            save="%s/DOE_Holder1.stl" %comp
-            Mesh.export(__objs__,save)
-            del __objs__
-            '''
-            source = source_path + doe_halter_filename + '.STL'
-            destination = "%s/DOE_Holder1_new.stl" %comp
-            shutil.copy(source,destination)
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder3"))
-            #import Mesh
-            save="%s/DOE_Holder3.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder1"))
-            #import Mesh
-            save="%s/LaserHolder1.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder2"))
-            #import Mesh
-            save="%s/LaserHolder2.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
-            '''
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("cap"))
-            #import Mesh
-            save="%s/cap.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
-            '''
-            source =  source_path + deckel_filename + '.STL'
-            destination = "%s/cap_new.stl" %comp
-            shutil.copy(source,destination)
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("Mount_Shroud"))
-            #import Mesh
-            save="%s/MountShroud.stl" %comp
-            Mesh.export(__objs__,save)
-            print(save)
-            del __objs__
 
+            for p in parts_list:
+                objs_to_save = [App.getDocument(doc_name).getObject(p)]
+                save_name = '%s.%s' % (p, 'stl')
+                save_path = os.path.join(comp, save_name)
+                Mesh.export(objs_to_save, save_path)
+                print(save_path)
 
-        elif e==1 and l==0:
-            print(".step")
-            comp = self.lineEdit_2.text()
+        elif e == 1:
+            print("Format STEP")
+
             self.lineEdit_2.setText(str(comp)) 
-            source =  source_path + doe_halter_filename + '.STEP'
+            source = os.path.join(source_path, doe_halter_filename + '.STEP')
             destination = "%s/DOE_Holder1_new.step" %comp
             shutil.copy(source,destination)
-            '''
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder1"))
-            import ImportGui
-            save="%s/DOE_Holder1.step" %comp
-            ImportGui.export(__objs__,save)
-            print(comp)
-            del __objs__
-            '''
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder3"))
-            import ImportGui
-            save="%s/DOE_Holder3.step" %comp
-            ImportGui.export(__objs__,save)
-            print(comp)
-            print(save)
-            del __objs__
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("LensHolder"))
-            #import ImportGui
-            save="%s/LensHolder.step" %comp
-            ImportGui.export(__objs__,save)
-            print(save)
-            del __objs__
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder1"))
-            #import ImportGui
-            save="%s/LaserHolder1.step" %comp
-            ImportGui.export(__objs__,save)
-            print(save)
-            del __objs__
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder2"))
-            #import ImportGui
-            save="%s/LaserHolder2.step" %comp
-            ImportGui.export(__objs__,save)
-            print(save)
-            del __objs__
-            '''
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("cap"))
-            #import ImportGui
-            save="%s/cap.step" %comp
-            ImportGui.export(__objs__,save)
-            print(save)
-            del __objs__
-           '''
-            source =  source_path + deckel_filename + '.STEP'
+
+            source = os.path.join(source_path, deckel_filename + '.STEP')
             destination = "%s/cap_new.step" %comp
             shutil.copy(source,destination)
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("Mount_Shroud"))
-            #import ImportGui
-            save="%s/Mount_Shroud.step" %comp
-            ImportGui.export(__objs__,save)
-            print(save)
-            del __objs__
 
-        elif e==1 and l==1:
-            print(".step")
-            comp = self.lineEdit_2.text()
-            self.lineEdit_2.setText(str(comp)) 
-            source =  source_path + doe_halter_filename + '.STEP'
-            destination = "%s/DOE_Holder1_new.step" %comp
-            shutil.copy(source,destination)
-            '''
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder1"))
-            import ImportGui
-            save="%s/DOE_Holder1.step" %comp
-            ImportGui.export(__objs__,save)
-            print(comp)
-            del __objs__
-            '''
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("DOE_Holder3"))
-            import ImportGui
-            save="%s/DOE_Holder3.step" %comp
-            ImportGui.export(__objs__,save)
-            print(comp)
-            print(save)
-            del __objs__
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder1"))
-            #import ImportGui
-            save="%s/LaserHolder1.step" %comp
-            ImportGui.export(__objs__,save)
-            print(save)
-            del __objs__
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("LaserHolder2"))
-            #import ImportGui
-            save="%s/LaserHolder2.step" %comp
-            ImportGui.export(__objs__,save)
-            print(save)
-            del __objs__
-            '''
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("cap"))
-            #import ImportGui
-            save="%s/cap.step" %comp
-            ImportGui.export(__objs__,save)
-            print(save)
-            del __objs__
-           '''
-            source =  source_path + deckel_filename + '.STEP'
-            destination = "%s/cap_new.step" %comp
-            shutil.copy(source,destination)
-            __objs__=[]
-            __objs__.append(App.getDocument("Assembly").getObject("Mount_Shroud"))
-            #import ImportGui
-            save="%s/Mount_Shroud.step" %comp
-            ImportGui.export(__objs__,save)
-            print(save)
-            del __objs__
-
+            for p in parts_list:
+                objs_to_save = [App.getDocument(doc_name).getObject(p)]
+                save_name = '%s.%s' % (p, 'step')
+                save_path = os.path.join(comp, save_name)
+                ImportGui.export(objs_to_save, save_path)
+                print(save_path)
 
         elif e==2:
             print(".FreeCAD")
@@ -1363,7 +1192,7 @@ class Ui_MainWindow(object):
             self.lineEdit_2.setText(str(comp))
             save="%s .FCStd" %comp
             #Gui.SendMsgToActiveView("SaveAs")
-            App.getDocument("Assembly").saveAs(save)
+            App.getDocument(doc_name).saveAs(save)
 
 
         self.pushButton_1.setStyleSheet("background-color: QPalette.Base")                  # origin system color pushButton_1
@@ -1436,68 +1265,10 @@ class Ui_MainWindow(object):
         #here your code
         #
         print( "Apply")
-
-
-        #Definition of Values
-        Height = float(self.lineEdit_1.text())
-        Height = round(Height,1)
-        Width = float(self.lineEdit_3.text())
-        Width = round(Width,1)
-        DL = float(self.lineEdit_4.text())
-        DL = round(DL,1)
-        Thickness = float(self.lineEdit_5.text())
-        Thickness = round(Thickness,1)
-        LHD = float(self.lineEdit_6.text())
-        LHD = round(LHD,1)
-        #DOED=25.4
-        LL = float(self.lineEdit_7.text())
-        LL = round(LL,1)
-        DLL = float(self.lineEdit_8.text())
-        DLL = round(DLL,1)
-        RodIndex=self.cb3.currentIndex()
-        Mount=self.cb4.currentIndex()
-        if RodIndex==0:
-            RodLength = 200
-        elif RodIndex==1:
-            RodLength = 125
-        elif RodIndex==2:
-            RodLength = 150
-        elif RodIndex==3:
-            RodLength = 170
-        elif RodIndex==4:
-            RodLength = 235  
-
-        e=self.cb1.currentIndex()
-        if e==0:
-            print("yes")
-            LensBin=1
-        
-        elif e==1:
-            print("no")
-            LensBin=0
-
-
-        comp = self.lineEdit_2.text()
-        g=self.cb2.currentIndex()
-        if g==0:
-            format=".stl"
-        elif g==1:
-            format=".step"
-        elif g==2:
-            format=".FreeCAD"
-            
-
-        #filename = "C:/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei.csv"
-        #csvdatei = open('/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei.csv',"r",encoding="latin-1")
-        csvdatei = open(csv_filename,"w", newline='')
-        csv_writer = csv.writer(csvdatei, delimiter=';')
-        #csv_reader_object = csv.reader(csvdatei)
-        csv_writer.writerow(["DOE Hole Width","DOE Hole Height","Lens Diameter","Lens Holder Depth","Laser Diameter","Rod Length","Lens","Laser Length", "Dist. Laser Lens","comp. location","file format","mounting"])
-        csv_writer.writerow([Height,Width,DL,Thickness,LHD,RodLength,LensBin,LL,DLL,comp,format,Mount])
-
-        csvdatei.close()        
-
-        make_parts(csv_filename)
+        changed = self.read_parameters_and_save(csv_filename)
+        if changed:
+            # Only recompute parts if parameters changed
+            make_parts(csv_filename)
 
     def on_pushButton_5_clicked(self):    # make Suggestion for Laser                                     # connection on_pushButton_2_clicked
         #

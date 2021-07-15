@@ -9,7 +9,7 @@ import csv
 
 
 
-doc_name = 'Assembly' 
+from . import doc_name
 
 
 #Function to clear Window
