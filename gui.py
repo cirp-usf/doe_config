@@ -1314,16 +1314,3 @@ MainWindow = QtGui.QMainWindow()
 ui = Ui_MainWindow()
 ui.setupUi(MainWindow)
 #MainWindow.show()
-
-
-
-
-
-
-
-#Show parts in a nice View
-#App.activeDocument().recompute()
-#Gui.activeDocument().activeView().viewAxometric()
-#Gui.SendMsgToActiveView("ViewFit")
-
-

@@ -4,6 +4,6 @@ import sys
 
 sys.path.append('C:/Users/usf/Python/Morphoa')
 
-import doe_config
+from doe_config.gui import MainWindow
 
-doe_config.main()
+MainWindow.show()

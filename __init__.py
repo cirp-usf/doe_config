@@ -5,8 +5,3 @@
 doc_name = 'Assembly'
 
 
-from .gui import MainWindow
-
-
-def main():
-    MainWindow.show()
