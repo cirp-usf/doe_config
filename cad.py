@@ -3,13 +3,22 @@ import Part
 import FreeCAD as App
 from FreeCAD import Base
 import FreeCADGui as Gui
+import Mesh
+import ImportGui
 import math
 from math import pi
 import csv
+import shutil
+import os.path
 
 
 
-from . import doc_name
+from . import __path__, doc_name
+source_path = os.path.join(__path__[0], 'step')
+source_path = os.path.normpath(source_path)
+
+doe_halter_filename = 'DOE-Halter_01_D25___V05'
+deckel_filename = 'Deckel___V03'
 
 
 #Function to clear Window
@@ -30,6 +39,54 @@ def create_doc():
 def close_document():
     if doc_name in App.listDocuments():
         App.closeDocument(doc_name)
+
+def save_parts(format_, lens, dest):
+    parts_list = ['DOE_Holder3', 'LaserHolder1', 'LaserHolder2', 'Mount_Shroud']
+    if lens == 0:
+        parts_list.append('LensHolder')
+
+    if format_ == 0:
+        print("Format STL")
+
+        source = os.path.join(source_path, doe_halter_filename + '.STL')
+        destination = "%s/DOE_Holder1_new.stl" % dest
+        shutil.copy(source,destination)
+
+        source = os.path.join(source_path, deckel_filename + '.STL')
+        destination = "%s/cap_new.stl" % dest
+        shutil.copy(source,destination)
+
+        for p in parts_list:
+            objs_to_save = [App.getDocument(doc_name).getObject(p)]
+            save_name = '%s.%s' % (p, 'stl')
+            save_path = os.path.join(dest , save_name)
+            Mesh.export(objs_to_save, save_path)
+            print(save_path)
+
+    elif format_ == 1:
+        print("Format STEP")
+
+        source = os.path.join(source_path, doe_halter_filename + '.STEP')
+        destination = "%s/DOE_Holder1_new.step" % dest
+        shutil.copy(source,destination)
+
+        source = os.path.join(source_path, deckel_filename + '.STEP')
+        destination = "%s/cap_new.step" % dest
+        shutil.copy(source,destination)
+
+        for p in parts_list:
+            objs_to_save = [App.getDocument(doc_name).getObject(p)]
+            save_name = '%s.%s' % (p, 'step')
+            save_path = os.path.join(dest, save_name)
+            ImportGui.export(objs_to_save, save_path)
+            print(save_path)
+
+    elif format_ == 2:
+        print(".FreeCAD")
+        save="%s .FCStd" % dest
+        #Gui.SendMsgToActiveView("SaveAs")
+        App.getDocument(doc_name).saveAs(save)
+
 
 def make_parts(csv_filename):						#Plot Part
     #Definition of Values

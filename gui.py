@@ -1,25 +1,14 @@
 import FreeCAD as App
-import Mesh
-import ImportGui
 import PySide
 from PySide import QtCore, QtGui
 import csv
-import shutil
-import os.path
 
-from .cad import make_parts, close_document
-from . import __path__, doc_name
+from .cad import make_parts, close_document, save_parts
 
 global switch ; switch = 0
 
 csv_filename = '/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei_write.csv'
 csv_filename = '/Users/usf/Morphoa/Steffen/testdatei_write.csv'
-
-source_path = os.path.join(__path__[0], 'step')
-source_path = os.path.normpath(source_path)
-
-doe_halter_filename = 'DOE-Halter_01_D25___V05'
-deckel_filename = 'Deckel___V03'
 
 
 try:
@@ -1142,58 +1131,11 @@ class Ui_MainWindow(object):
             # Only recompute parts if parameters changed
             make_parts(csv_filename)
 
-        e=self.cb2.currentIndex()
-        l=self.cb1.currentIndex()
-        comp = self.lineEdit_2.text()
-        self.lineEdit_2.setText(str(comp))
-        parts_list = ['DOE_Holder3', 'LaserHolder1', 'LaserHolder2', 'Mount_Shroud']
-        if l == 0:
-            parts_list.append('LensHolder')
-        if e == 0:
-            print("Format STL")
-
-            source = os.path.join(source_path, doe_halter_filename + '.STL')
-            destination = "%s/DOE_Holder1_new.stl" %comp
-            shutil.copy(source,destination)
-
-            source = os.path.join(source_path, deckel_filename + '.STL')
-            destination = "%s/cap_new.stl" %comp
-            shutil.copy(source,destination)
-
-            for p in parts_list:
-                objs_to_save = [App.getDocument(doc_name).getObject(p)]
-                save_name = '%s.%s' % (p, 'stl')
-                save_path = os.path.join(comp, save_name)
-                Mesh.export(objs_to_save, save_path)
-                print(save_path)
-
-        elif e == 1:
-            print("Format STEP")
-
-            self.lineEdit_2.setText(str(comp)) 
-            source = os.path.join(source_path, doe_halter_filename + '.STEP')
-            destination = "%s/DOE_Holder1_new.step" %comp
-            shutil.copy(source,destination)
-
-            source = os.path.join(source_path, deckel_filename + '.STEP')
-            destination = "%s/cap_new.step" %comp
-            shutil.copy(source,destination)
-
-            for p in parts_list:
-                objs_to_save = [App.getDocument(doc_name).getObject(p)]
-                save_name = '%s.%s' % (p, 'step')
-                save_path = os.path.join(comp, save_name)
-                ImportGui.export(objs_to_save, save_path)
-                print(save_path)
-
-        elif e==2:
-            print(".FreeCAD")
-            comp = self.lineEdit_2.text()
-            self.lineEdit_2.setText(str(comp))
-            save="%s .FCStd" %comp
-            #Gui.SendMsgToActiveView("SaveAs")
-            App.getDocument(doc_name).saveAs(save)
-
+        format_ = self.cb2.currentIndex()
+        lens = self.cb1.currentIndex()
+        dest = self.lineEdit_2.text()
+        self.lineEdit_2.setText(str(dest))
+        save_parts(format_, lens, dest)
 
         self.pushButton_1.setStyleSheet("background-color: QPalette.Base")                  # origin system color pushButton_1
         App.Console.PrintMessage("Save\r\n")
