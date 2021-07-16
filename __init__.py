@@ -2,9 +2,11 @@
 
 #from PySide import  QtGui
 
+doc_name = 'Assembly'
+
+
 from .gui import MainWindow
 
-doc_name = 'Assembly'
 
 def main():
     MainWindow.show()

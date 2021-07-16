@@ -6,9 +6,6 @@ __pycache__/
 # C extensions
 *.so
 
-# Generated geometries
-*.stl
-*.STL
 
 # Distribution / packaging
 .Python

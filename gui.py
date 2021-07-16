@@ -15,7 +15,7 @@ global switch ; switch = 0
 csv_filename = '/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei_write.csv'
 csv_filename = '/Users/usf/Morphoa/Steffen/testdatei_write.csv'
 
-source_path = os.path.join(__path__, 'step')
+source_path = os.path.join(__path__[0], 'step')
 source_path = os.path.normpath(source_path)
 
 doe_halter_filename = 'DOE-Halter_01_D25___V05'
