@@ -21,6 +21,9 @@ doe_halter_filename = 'DOE-Halter_01_D25___V05'
 deckel_filename = 'Deckel___V03'
 
 
+RotCenter0 = Base.Vector(0, 0, 0)
+RotAxisZ = Base.Vector(0, 0, 1)
+
 #Function to clear Window
 def clearAll():
     doc = App.ActiveDocument
@@ -86,6 +89,175 @@ def save_parts(format_, lens, dest):
         save="%s .FCStd" % dest
         #Gui.SendMsgToActiveView("SaveAs")
         App.getDocument(doc_name).saveAs(save)
+
+
+def make_poly_points(xpoints, ypoints):
+    n = len(xpoints)
+    assert len(ypoints) == n, 'x and y lengths not equal'
+    zpoints = [0.0] * n
+    
+    return list(map(Base.Vector, xpoints, ypoints, zpoints))
+
+
+def make_holder(Diameter, Thickness):
+    #Definition
+    innerD = Diameter
+    Diameter = max(14.0, Diameter)
+    
+    DSA = 6.1 * Diameter - 58.6
+    DSI = DSA - 5
+    MM = 3.5 * Diameter - 27.8
+    
+    chamfer1 = 1.0
+    chamfer2 = 2.0
+    fillet = 0.5
+
+    #OuterRing
+    BossExtrude1 = Part.makeCylinder(40 / 2, Thickness)
+    CutExtrude1 = Part.makeCylinder(33 / 2, Thickness)
+    PartBossExtrude1 = BossExtrude1.cut(CutExtrude1)
+
+    #InnerRing
+    BossExtrude2 = Part.makeCylinder((Diameter + 5.0) / 2,Thickness)
+    CutExtrude2 = Part.makeCylinder(innerD / 2,Thickness)
+    PartBossExtrude2 = BossExtrude2.cut(CutExtrude2)
+
+    #CutsInnerRing
+    sin20 = math.sin(math.radians(20.0))
+    cut_length = Diameter / 2 + 7
+    xpoints = [0, cut_length * sin20, -cut_length * sin20, 0]
+    ypoints = [0, cut_length, cut_length, 0]
+    
+    lshape_wire = Part.makePolygon(make_poly_points(xpoints, ypoints))
+    
+    L = Part.Face(lshape_wire)
+    K1 = L.extrude(Base.Vector(0, 0, Thickness))
+    K2 = K1.copy()
+    K3 = K1.copy()
+    K4 = K1.copy()
+    K1.rotate(RotCenter0, RotAxisZ, -45)
+    K2.rotate(RotCenter0, RotAxisZ, 45)
+    K3.rotate(RotCenter0, RotAxisZ, 225)
+    K4.rotate(RotCenter0, RotAxisZ, 135)
+    C1 = PartBossExtrude2.cut(K1)
+    C2 = C1.cut(K2)
+    C3 = C2.cut(K3)
+    C4 = C3.cut(K4)
+
+
+    #SpringElements
+    BossExtrude3 = Part.makeCylinder(DSA/2,Thickness)
+    CutExtrude3 = Part.makeCylinder(DSI/2,Thickness)
+    PartBossExtrude3 = BossExtrude3.cut(CutExtrude3)
+    TranslationPartBossExtrude3 = (MM,0,0)
+    PartBossExtrude3.translate(TranslationPartBossExtrude3)
+    CutExtrude4=Part.makeCylinder(36/2,Thickness)
+
+
+
+	        
+	
+    #UnionParts
+    fused1 = PartBossExtrude1.fuse(C4)
+    
+
+    SpringElement = PartBossExtrude3.common(CutExtrude4)
+    fused1 = fused1.fuse(SpringElement)
+    SpringElement.rotate(RotCenter0, RotAxisZ, 90)
+    fused1 = fused1.fuse(SpringElement)
+    SpringElement.rotate(RotCenter0, RotAxisZ, 180)
+    fused1 = fused1.fuse(SpringElement)
+    SpringElement.rotate(RotCenter0, RotAxisZ, 270)
+    fused1 = fused1.fuse(SpringElement)
+
+
+    #OuterRingSquares
+    Square = Part.makeBox(5.13,15,Thickness)
+    TranslationSquare = (17.37,-15/2,0)
+    Square.translate(TranslationSquare)
+    #Part.show(Square)
+    
+	
+    #CutoutsOuterRingSquares1
+    Hole = Part.makeCylinder(2.1,Thickness)
+    TranslationHole = (20.5,0,0)
+    Hole.translate(TranslationHole)
+    PartCutout = Square.cut(Hole)
+    fused1 = fused1.cut(Hole)
+
+    Rectangle = Part.makeBox(0.69 + 0.5, 3.2, Thickness)
+    TranslationRectangle = (21.81 - 0.25, -3.2 / 2, 0)
+    Rectangle.translate(TranslationRectangle)
+    PartCut = PartCutout.cut(Rectangle)
+    fused1 = fused1.fuse(PartCut)
+    
+    #CutoutsOuterRingSquares2
+    PartCut.rotate(RotCenter0, RotAxisZ, 90)
+    Hole.rotate(RotCenter0, RotAxisZ, 90)
+    fused1 = fused1.fuse(PartCut)
+    fused1 = fused1.cut(Hole)
+
+    #CutoutsOuterRingSquares3
+    PartCut.rotate(RotCenter0, RotAxisZ, 180)
+    Hole.rotate(RotCenter0, RotAxisZ, 180)
+    fused1 = fused1.fuse(PartCut)
+    fused1 = fused1.cut(Hole)
+
+    #CutoutsOuterRingSquares4
+    PartCut.rotate(RotCenter0, RotAxisZ, 270)
+    Hole.rotate(RotCenter0, RotAxisZ, 270)
+    fused1 = fused1.fuse(PartCut)
+    fused1 = fused1.cut(Hole)
+
+    #Outer Polygon
+    xpoints = [22.7, 22.7, 18.0, 18.0, 22.7]
+    ypoints = [-5.0, 5.0, 5.0, -5.0, -5.0]
+
+
+    lshape_wire = Part.makePolygon(make_poly_points(xpoints, ypoints))
+    L = Part.Face(lshape_wire)
+    K1 = L.extrude(Base.Vector(0, 0, Thickness))
+    K2 = K1.copy()
+    K3 = K1.copy()
+    K4 = K1.copy()
+    K1.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), -45)
+    K2.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 45)
+    K3.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 225)
+    K4.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 135)
+
+    fused1 = fused1.fuse(K1)
+    fused1 = fused1.fuse(K2)
+    fused1 = fused1.fuse(K3)
+    fused1 = fused1.fuse(K4)
+   
+    #TranslationLensHolder=(0,0,69	
+    #TranslationLensHolder=(0,0,83-DLL)
+    #fused17.translate(TranslationLensHolder)
+    #Part.show(fused17)
+    fused1 = fused1.removeSplitter()
+    [17, 20, 118, 130, 141, 149, 164, 172]
+    [183, 184, 196, 197, 208, 209, 220, 221]
+
+    eds = [28, 29, 31, 32, 34, 35, 36, 37, 47, 48, 49, 50, 51, 61, 62, 63, 64, 65, 75, 76, 77, 78, 82, 88, 94, 100, 101, 122, 127, 146, 157, 169, 180, 194, 205, 217, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257]
+    
+    edc1 = [fused1.Edges[x] for x in eds]
+    
+    eds = [17, 20, 118, 130, 141, 149, 164, 172]
+    
+    edc2 = [fused1.Edges[x] for x in eds]
+    
+    eds = [183, 184, 196, 197, 208, 209, 220, 221]
+    
+    edf = [fused1.Edges[x] for x in eds]
+    
+    fused1 = fused1.makeChamfer(chamfer1, edc1)
+    fused1 = fused1.makeChamfer(chamfer2, edc2)
+    fused1 = fused1.makeFillet(fillet, edf)
+
+    return fused1
+
+
+
 
 
 def make_parts(csv_filename):						#Plot Part
