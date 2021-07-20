@@ -19,6 +19,8 @@ source_path = os.path.normpath(source_path)
 
 doe_halter_filename = 'DOE-Halter_01_D25___V05'
 deckel_filename = 'Deckel___V03'
+mount_filename = 'Mount'
+clamping_Holder_filename = 'FT_Klemmbuchse5_37679_dummie___V02'
 
 
 RotCenter0 = Base.Vector(0, 0, 0)
@@ -290,341 +292,27 @@ def make_parts(csv_filename):						#Plot Part
     clearAll()
     ###Part-Code###############################################################
     ###DOE-Holder1###############################################################
-    ##BasePart
-    #make sketch
-    x1=15
-    y1=-30
-    x2=15
-    y2=30
-    x3=18
-    y3=30
-    x4=18
-    y4=21
-    x5=23
-    y5=16
-    x6=23
-    y6=6.5
-    x7=20
-    y7=6.5
-    x8=20
-    y8=15.25
-    x9=17
-    y9=15.25
-    x10=17
-    y10=-15.25
-    x11=20
-    y11=-15.25
-    x12=20
-    y12=-6.5
-    x13=23
-    y13=-6.5
-    x14=23
-    y14=-16
-    x15=18
-    y15=-21
-    x16=18
-    y16=-30
-    x17=15
-    y17=-30
-
-    #Extrude
-    lshape_wire = Part.makePolygon([Base.Vector(x1, y1, 0), Base.Vector(x2, y2, 0), Base.Vector(x3, y3, 0), Base.Vector(x4, y4, 0), Base.Vector(x5, y5, 0), Base.Vector(x6, y6, 0), Base.Vector(x7, y7, 0), Base.Vector(x8, y8, 0), Base.Vector(x9, y9, 0), Base.Vector(x10, y10, 0), Base.Vector(x11, y11, 0), Base.Vector(x12, y12, 0), Base.Vector(x13, y13, 0), Base.Vector(x14, y14, 0), Base.Vector(x15, y15, 0), Base.Vector(x16, y16, 0), Base.Vector(x17, y17, 0)])
-    L=Part.Face(lshape_wire)
-    BasePart=  L.extrude(Base.Vector(0, 0, 60))
-
-    #Part.show(BasePart)
-
-
-    #SquareHole
-    SquareHole=Part.makeBox(15,15,2)
-    SquareHole.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 90)
-    TranslationSquareHole=(15,-15/2,30+15/2)
-    SquareHole.translate(TranslationSquareHole)
-    #Part.show(SquareHole)
-
-
-    fused1=BasePart.cut(SquareHole)
-    #Part.show(fused1)
-
-    #Cylinders for threads
-    Cylinder=Part.makeCylinder(8/2,3)
-    Cylinder.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 90)
-    TranslationCylinder=(23,11,30)
-    Cylinder.translate(TranslationCylinder)
-    fused2=fused1.fuse(Cylinder)
-    #Part.show(Cylinder)
-
-
-    TranslationCylinder=(0,-2*11,0)
-    Cylinder.translate(TranslationCylinder)
-    fused3=fused2.fuse(Cylinder)
-    #Part.show(Cylinder)
-
-
-    #Part.show(fused3)
-
-    #Drilling
-    Drilling=Part.makeCylinder(3.9/2,6)
-    Drilling.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 90)
-    DrillingTranslation=(20,11,30)
-    Drilling.translate(DrillingTranslation)
-    fused4=fused3.cut(Drilling)
-    TranslationDrilling=(0,-2*11,0)
-    Drilling.translate(TranslationDrilling)
-    fused5=fused4.cut(Drilling)
-
-    #Part.show(fused5)
-
-    #threads
-    #Screw
-    x1=0
-    y1=0
-    x2=0.1
-    y2=0
-    x3=0.1
-    y3=0.05
-    x4=1.0392/2+0.1
-    y4=0.35
-    x5=0.1
-    y5=0.65
-    x6=0.1
-    y6=0.7
-    x7=0
-    y7=0.7
-    x8=0
-    y8=0
     
-    shape1=Part.makeHelix(0.8,8,4.134/2)
-    shape2= Part.makePolygon([Base.Vector(x1, y1, 0), Base.Vector(x2, y2, 0), Base.Vector(x3, y3, 0), Base.Vector(x4, y4, 0), Base.Vector(x5, y5, 0), Base.Vector(x6, y6, 0), Base.Vector(x7, y7, 0), Base.Vector(x8, y8, 0)])
-    shape2.rotate(Base.Vector(0, 0, 0),Base.Vector(1, 0, 0), 90)
-    TranslationShape2=(4.134/2-0.1,0,0)
-    shape2.translate(TranslationShape2)
-
-    traj = Part.Wire([shape1])
-    section = Part.Wire([shape2])
-
-    makeSolid = True #1
-    isFrenet = True #1
-
-    # create a 3D shape and assigh it to the current document
-    Sweep = Part.Wire(traj).makePipeShell([section],makeSolid,isFrenet)
-    inner=Part.makeCylinder(4.132/2,10)
     
-    Thread=inner.fuse(Sweep)
-    Thread.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 90)
-
-    TranslationThread=(18.5,11,30)
-    Thread.translate(TranslationThread)
-
-    fused6=fused5.cut(Thread)
-
-    TranslationThread=(0,-2*11,0)
-    Thread.translate(TranslationThread)
-    BasePart=fused6.cut(Thread)
-
-    #Part.show(fused7)
-
-    ################################################################
-    ##LaserHolder Part
-    #Definition
-    HoleTolerance=0
-    RectangleTolerance=0
-    #ToleranceNubble=0
-
-
-	        
-    #OuterRing
-    BossExtrude1=Part.makeCylinder(40/2,15)
-    CutExtrude1=Part.makeCylinder(33/2,15)
-    PartBossExtrude1=BossExtrude1.cut(CutExtrude1)
-	        
-
-    #OuterRingSquares
-    Square=Part.makeBox(5.13,15,15)
-    TranslationSquare=(17.37,-15/2,0)
-    Square.translate(TranslationSquare)
-    #Part.show(Square)
-
-	
-    #CutoutsOuterRingSquares1
-    Hole=Part.makeCylinder(2.2+HoleTolerance,15)
-    TranslationHole=(20.3,0,0)
-    Hole.translate(TranslationHole)
-    PartCutout=Square.cut(Hole)
-    fused6=PartBossExtrude1.cut(Hole)
-
-    Rectangle=Part.makeBox(0.69+0.5,3.2+RectangleTolerance,15)
-    TranslationRectangle=(21.81-0.25,-3.2/2-RectangleTolerance/2,0)
-    Rectangle.translate(TranslationRectangle)
-    PartCut=PartCutout.cut(Rectangle)
-    fused7= fused6.fuse(PartCut)
-
-    #CutoutsOuterRingSquares2
-    PartCut.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 90)
-    Hole.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 90)
-    fused8=fused7.fuse(PartCut)
-    fused9=fused8.cut(Hole)
-
-	
-    #CutoutsOuterRingSquares3
-    PartCut.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 180)
-    Hole.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 180)
-    fused10=fused9.fuse(PartCut)
-    fused11=fused10.cut(Hole)
+    #STEP-Import-DOE-Holder1
+    fused26 = Part.Shape()
+    source = os.path.join(source_path, doe_halter_filename + '.step')
+    fused26.read(source)
     
-	
-    #CutoutsOuterRingSquares4
-    PartCut.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 270)
-    Hole.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 270)
-    fused12=fused11.fuse(PartCut)
-    fused13=fused12.cut(Hole)
-    #Part.show(fused13)
-
-	
-	
-
-    #Outer Polygon
-    x1=18+2.75/(math.tan((30)*2*pi/360))
-    y1=-4.25
-    x2=18+2.75/(math.tan((30)*2*pi/360))
-    y2=4.25
-    x3=18
-    y3=4.25
-    x4=18
-    y4=-4.25
-    x5=18+2.75/(math.tan((30)*2*pi/360))
-    y5=-4.25
-
-
-    lshape_wire = Part.makePolygon([Base.Vector(x1, y1, 0), Base.Vector(x2, y2, 0), Base.Vector(x3, y3, 0), Base.Vector(x4, y4, 0), Base.Vector(x5, y5, 0)])
-    L=Part.Face(lshape_wire)
-    K1 = L.extrude(Base.Vector(0, 0, 15))
-    K2 = L.extrude(Base.Vector(0, 0, 15))
-    K3 = L.extrude(Base.Vector(0, 0, 15))
-    K4 = L.extrude(Base.Vector(0, 0, 15))
-    K1.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), -45)
-    K2.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 45)
-    K3.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 225)
-    K4.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 135)
-
-    fused14=fused13.fuse(K1)
-    fused15=fused14.fuse(K2)
-    fused16=fused15.fuse(K3)
-    fused17=fused16.fuse(K4)
-   
-    fused17.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 90)	
-    TranslationHolder4=(0,0,30)
-    fused17.translate(TranslationHolder4)
-
-    fused18=fused17.fuse(BasePart)
-    #Part.show(fused18)
-
-    #clampings
-    #make sketch
-    x1=0
-    y1=0
-    x2=0
-    y2=3.25
-    x3=2
-    y3=3.25
-    x4=15
-    y4=0.25
-    x5=15
-    y5=0
-    x6=0
-    y6=0
-    
-    #Extrude
-    lshape_wire = Part.makePolygon([Base.Vector(x1, y1, 0), Base.Vector(x2, y2, 0), Base.Vector(x3, y3, 0), Base.Vector(x4, y4, 0), Base.Vector(x5, y5, 0), Base.Vector(x6, y6, 0)])
-    L=Part.Face(lshape_wire)
-    Clamping=  L.extrude(Base.Vector(0, 0, 1.5))
-    Clamping.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 180)
-    Clamping.rotate(Base.Vector(0, 0, 0),Base.Vector(1, 0, 0), -90)
-    TranslationClamping=(15,-4.25,7.75)
-    Clamping.translate(TranslationClamping)
-    #Part.show(Clamping)
-    fused19=fused18.fuse(Clamping)
-    Clamping.rotate(Base.Vector(0, 0, 30),Base.Vector(1, 0, 0), -90)
-    #Part.show(Clamping)
-    fused20=fused19.fuse(Clamping)
-    Clamping.rotate(Base.Vector(0, 0, 30),Base.Vector(1, 0, 0), -90)
-    #Part.show(Clamping)
-    fused21=fused20.fuse(Clamping)
-    Clamping.rotate(Base.Vector(0, 0, 30),Base.Vector(1, 0, 0), -90)
-    #Part.show(Clamping)
-    fused22=fused21.fuse(Clamping)
-    
-    TranslationClamping=(0,0,10)
-    Clamping.translate(TranslationClamping)
-    #Part.show(Clamping)
-    fused23=fused22.fuse(Clamping)
-    Clamping.rotate(Base.Vector(0, 0, 30),Base.Vector(1, 0, 0), -90)
-    #Part.show(Clamping)
-    fused24=fused23.fuse(Clamping)
-    Clamping.rotate(Base.Vector(0, 0, 30),Base.Vector(1, 0, 0), -90)
-    #Part.show(Clamping)
-    fused25=fused24.fuse(Clamping)
-    Clamping.rotate(Base.Vector(0, 0, 30),Base.Vector(1, 0, 0), -90)
-    #Part.show(Clamping)
-    fused26=fused25.fuse(Clamping)
     fused26.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 90)
-    AssemblyTranslation=(-30,0,0)
-    fused26.translate(AssemblyTranslation)
+    fused26.rotate(Base.Vector(0, 0, 0),Base.Vector(1, 0, 0), -90)
+    fused26.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), -90)
+    #AssemblyTranslation=(-30,0,0)
+    #fused26.translate(AssemblyTranslation)
     
-    #chamferinnerring
-    Holder4=App.ActiveDocument.addObject("Part::Feature", "myHolder4")
-    Holder4.Shape=fused26
-    Holder4.Shape=Holder4.Shape.removeSplitter()
     
-    chmfr = App.ActiveDocument.addObject("Part::Chamfer", "DOE_Holder1")
-    chmfr.Base = App.ActiveDocument.myHolder4
-    myEdges = []
+    #Display
+    Holder = App.ActiveDocument.addObject("Part::Feature", "DOE_Holder1")
+    Holder.Shape=fused26
+    Holder.Shape=Holder.Shape.removeSplitter()
+    Holder.ViewObject.ShapeColor = (0.0,0.0,192/255)
     
-
-    myEdges.append((2, 1.74, 1.74))# (edge number, chamfer start length, chamfer end length)
-    myEdges.append((144, 1.74, 1.74))
-    myEdges.append((170, 1.74, 1.74))
-    myEdges.append((184, 1.74, 1.74))
-    myEdges.append((209, 1.74, 1.74))
-    myEdges.append((223, 1.74, 1.74))
-    myEdges.append((248, 1.74, 1.74))
-    myEdges.append((270, 1.74, 1.74))
     
-
-    myEdges.append((21, 1.5, 1.5))
-    myEdges.append((156, 1.5, 1.5))
-    myEdges.append((158, 1.5, 1.5))
-    myEdges.append((195, 1.5, 1.5))
-    myEdges.append((197, 1.5, 1.5))
-    myEdges.append((234, 1.5, 1.5))
-    myEdges.append((236, 1.5, 1.5))
-    myEdges.append((258, 1.5, 1.5))
-    myEdges.append((394, 1.5, 1.5))
-    myEdges.append((395, 1.5, 1.5))
-    myEdges.append((396, 1.5, 1.5))
-    myEdges.append((397, 1.5, 1.5))
-    myEdges.append((398, 1.5, 1.5))
-    myEdges.append((399, 1.5, 1.5))
-    myEdges.append((400, 1.5, 1.5))
-    myEdges.append((401, 1.5, 1.5))
-    myEdges.append((402, 1.5, 1.5))
-    myEdges.append((403, 1.5, 1.5))
-    myEdges.append((404, 1.5, 1.5))
-    myEdges.append((405, 1.5, 1.5))
-    myEdges.append((112, 7.0, 7.0))
-    myEdges.append((113, 7.0, 7.0))
-    myEdges.append((114, 7.0, 7.0))
-    myEdges.append((128, 7.0, 7.0))
-
-
-    chmfr.Edges = myEdges
-
-    Gui.ActiveDocument.myHolder4.Visibility = False
-
-
-    App.ActiveDocument.recompute()
-   
-    chmfr.ViewObject.ShapeColor = (103/204,125/204,0.0)
     ###DOE-Holder1_End############################################################
     ###DOE-Holder3##############################################################
     #Base
@@ -1783,565 +1471,147 @@ def make_parts(csv_filename):						#Plot Part
     chmfr.ViewObject.ShapeColor = (0.3,0.3,0.3)
     ###Laser_End###############################################################
     ###Cap###################################################################
-
-    #make sketch
-    x1=-23
-    y1=-30
-    x2=23
-    y2=-30
-    x3=30
-    y3=-23
-    x4=30
-    y4=23
-    x5=23
-    y5=30
-    x6=-23
-    y6=30
-    x7=-30
-    y7=23
-    x8=-30
-    y8=-23
-    x9=-23
-    y9=-30
-
-    #Extrude
-    lshape_wire = Part.makePolygon([Base.Vector(x1, y1, 0), Base.Vector(x2, y2, 0), Base.Vector(x3, y3, 0), Base.Vector(x4, y4, 0), Base.Vector(x5, y5, 0), Base.Vector(x6, y6, 0), Base.Vector(x7, y7, 0), Base.Vector(x8, y8, 0), Base.Vector(x9, y9, 0)])
-    L=Part.Face(lshape_wire)
-    BasePart=  L.extrude(Base.Vector(0, 0, 3))
-
-    #Part.show(BasePart)
-    
-    #Drillings
-    CentralDrilling = Part.makeCylinder(16/2,3)
-    BossExtrude=BasePart.cut(CentralDrilling)
-
-    SmallDrilling = Part.makeCylinder(5/2,3)
-    TranslationSmallDrilling1 = (0,-20.5,0)
-    SmallDrilling.translate(TranslationSmallDrilling1)
-    BossExtrude1=BossExtrude.cut(SmallDrilling)
-
-    TranslationSmallDrilling2 = (0,20.5*2,0)
-    SmallDrilling.translate(TranslationSmallDrilling2)
-    BossExtrude2=BossExtrude1.cut(SmallDrilling)
-
-    TranslationSmallDrilling3 = (-20.5,-20.5,0)
-    SmallDrilling.translate(TranslationSmallDrilling3)
-    BossExtrude3=BossExtrude2.cut(SmallDrilling)
-
-    TranslationSmallDrilling4 = (20.5*2,0,0)
-    SmallDrilling.translate(TranslationSmallDrilling4)
-    BossExtrude4=BossExtrude3.cut(SmallDrilling)
-
-    #Plug
-    Basepart1=Part.makeCone(4.18,2.3,7)
-    TranslationBasepart1=(0,0,3)
-    Basepart1.translate(TranslationBasepart1)
-    #Part.show(Basepart1)
-    Basepart2=Part.makeCylinder(4.18,3)
-    #Part.show(Basepart2)
-
-    fused=Basepart1.fuse(Basepart2)
-    #Part.show(fused)
-
-
-    #make sketch
-    x1=0
-    y1=0
-    x2=-1
-    y2=5
-    x3=1
-    y3=5
-    x4=0
-    y4=0
-    
-    lshape_wire = Part.makePolygon([Base.Vector(x1, y1, 0), Base.Vector(x2, y2, 0), Base.Vector(x3, y3, 0), Base.Vector(x4, y4, 0)])
-    L=Part.Face(lshape_wire)
-    CutPart=  L.extrude(Base.Vector(0, 0, 10))
-    #Part.show(CutPart)
-    Extrude1=fused.cut(CutPart)
-
-    CutPart.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 45)
-    #Part.show(CutPart)
-    Extrude2=Extrude1.cut(CutPart)
-
-    CutPart.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 45)
-    #Part.show(CutPart)
-    Extrude3=Extrude2.cut(CutPart)
-
-    CutPart.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 45)
-    #Part.show(CutPart)
-    Extrude4=Extrude3.cut(CutPart)
-
-    CutPart.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 45)
-    #Part.show(CutPart)
-    Extrude5=Extrude4.cut(CutPart)
-
-    CutPart.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 45)
-    #Part.show(CutPart)
-    Extrude6=Extrude5.cut(CutPart)
-
-    CutPart.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 45)
-    #Part.show(CutPart)
-    Extrude7=Extrude6.cut(CutPart)
-
-    CutPart.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 45)
-    #Part.show(CutPart)
-    Extrude8=Extrude7.cut(CutPart)
-    #Part.show(Extrude8)
-
-
-    Central=Part.makeCylinder(2.3,10)
-    fused1=Central.fuse(Extrude8)
-    #Part.show(fused1)
-
-    Translationfused1=(21.12,21.12,3)
-    fused1.translate(Translationfused1)
-    fused2=BossExtrude4.fuse(fused1)
-
-    Translationfused2=(-21.12*2,0,0)
-    fused1.translate(Translationfused2)
-    fused3=fused2.fuse(fused1)
-    Translationfused3=(0,-21.12*2,0)
-    fused1.translate(Translationfused3)
-    fused4=fused3.fuse(fused1)
-    Translationfused4=(21.12*2,0,0)
-    fused1.translate(Translationfused4)
-    fused5=fused4.fuse(fused1)
+       
+    #STEP-Import-Cap
+    fused5 = Part.Shape()
+    source = os.path.join(source_path, deckel_filename + '.step')
+    fused5.read(source)   
     
     fused5.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 180)
+    fused5.rotate(Base.Vector(0, 0, 0),Base.Vector(1, 0, 0), -90)
     Translationcap=(0,0,RodLength-19.5)
     fused5.translate(Translationcap)
-
     
     #Display
     cap = App.ActiveDocument.addObject("Part::Feature", "cap")
     cap.Shape=fused5
     cap.Shape=cap.Shape.removeSplitter()
-    cap.ViewObject.ShapeColor = (1.0,1.0,192/255)
+    cap.ViewObject.ShapeColor = (0.0,0.0,192/255)
+
+    
+
+    
 
     ###Cap_End################################################################
     ###Clamping_Holder1##########################################################
     if LensBin==1:
-        #Cylinder
-        BossExtrude1=Part.makeCylinder(8/2,5)
-        CutExtrude1=Part.makeCylinder(4/2,5)
-        PartBossExtrude1=BossExtrude1.cut(CutExtrude1)
-        #Part.show(PartBossExtrude1)
+        
+        #STEP-Import-Cap
+        PartBossExtrude4 = Part.Shape()
+        source = os.path.join(source_path, clamping_Holder_filename + '.step')
+        PartBossExtrude4.read(source)   
     
-    
-        #Cutouts
-        CutExtrude2=Part.makeBox(3,1,1)
-        CutExtrude3=Part.makeBox(1,0.5,5)
-        CutExtrude4=Part.makeBox(3.4,3,5)
-        TranslationCutExtrude2=(1,-0.5,4)
-        TranslationCutExtrude3=(1.5,-0.25,0)
-        TranslationCutExtrude4=(-4,-1.7,0)
-        CutExtrude2.translate(TranslationCutExtrude2)
-        CutExtrude3.translate(TranslationCutExtrude3)
-        CutExtrude4.translate(TranslationCutExtrude4)
-        #Part.show(CutExtrude2)
-        #Part.show(CutExtrude3)
-        PartBossExtrude2=PartBossExtrude1.cut(CutExtrude2)
-        PartBossExtrude3=PartBossExtrude2.cut(CutExtrude3)
-        PartBossExtrude4=PartBossExtrude3.cut(CutExtrude4)
-        #Part.show(PartBossExtrude3)
-        #clampingholderTranslation=(20.5,0,64)
+        PartBossExtrude4.rotate(Base.Vector(0, 0, 0),Base.Vector(1, 0, 0), 90)
+        PartBossExtrude4.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 90)
         clampingholderTranslation=(20.5,0,78-DLL)
         PartBossExtrude4.translate(clampingholderTranslation)
-
-
-        #chamfer
-        clamping_holder1=App.ActiveDocument.addObject("Part::Feature", "clamping_holder1")
+        
+    
+        #Display
+        clamping_holder1 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder1")
         clamping_holder1.Shape=PartBossExtrude4
         clamping_holder1.Shape=clamping_holder1.Shape.removeSplitter()
-
-        chmfr = App.ActiveDocument.addObject("Part::Chamfer", "clamping_Holder1")
-        chmfr.Base = App.ActiveDocument.clamping_holder1
-        myEdges = []
-    
-        myEdges.append((15, 0.5, 0.5))# (edge number, chamfer start length, chamfer end length)
-        myEdges.append((18, 0.5, 0.5))
-        myEdges.append((19, 0.5, 0.5))
-        myEdges.append((26, 0.5, 0.5))
-        myEdges.append((30, 0.5, 0.5))
-        myEdges.append((37, 0.5, 0.5))
+        clamping_holder1.ViewObject.ShapeColor = (0.0,0.0,192/255)
         
-        chmfr.Edges = myEdges
-        Gui.ActiveDocument.clamping_holder1.Visibility = False
-
-        App.ActiveDocument.recompute()
         
-        chmfr.ViewObject.ShapeColor = (1.0,0.0,0.0)
     else:
         print("no Lens")
     ###Clamping_Holder1_End#######################################################
     ###Clamping_Holder2##########################################################
+    
     if LensBin==1:
-        #Cylinder
-        BossExtrude1=Part.makeCylinder(8/2,5)
-        CutExtrude1=Part.makeCylinder(4/2,5)
-        PartBossExtrude1=BossExtrude1.cut(CutExtrude1)
-        #Part.show(PartBossExtrude1)
-
-
-        #Cutouts
-        CutExtrude2=Part.makeBox(3,1,1)
-        CutExtrude3=Part.makeBox(1,0.5,5)
-        CutExtrude4=Part.makeBox(3.4,3,5)
-        TranslationCutExtrude2=(1,-0.5,4)
-        TranslationCutExtrude3=(1.5,-0.25,0)
-        TranslationCutExtrude4=(-4,-1.7,0)
-        CutExtrude2.translate(TranslationCutExtrude2)
-        CutExtrude3.translate(TranslationCutExtrude3)
-        CutExtrude4.translate(TranslationCutExtrude4)
-        #Part.show(CutExtrude2)
-        #Part.show(CutExtrude3)
-        PartBossExtrude2=PartBossExtrude1.cut(CutExtrude2)
-        PartBossExtrude3=PartBossExtrude2.cut(CutExtrude3)
-        PartBossExtrude4=PartBossExtrude3.cut(CutExtrude4)
-        #Part.show(PartBossExtrude3)
-        clampingholderTranslation=(-20.5,0,78-DLL)
-        PartBossExtrude4.translate(clampingholderTranslation)
         
-    
-        #chamfer
-        clamping_holder2=App.ActiveDocument.addObject("Part::Feature", "clamping_holder2")
-        clamping_holder2.Shape=PartBossExtrude4
+        PartBossExtrude5 = PartBossExtrude4.copy()
+        clampingholderTranslation=(-20.5*2,0,0)
+        PartBossExtrude5.translate(clampingholderTranslation)
+        
+        #Display
+        clamping_holder2 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder2")
+        clamping_holder2.Shape=PartBossExtrude5
         clamping_holder2.Shape=clamping_holder2.Shape.removeSplitter()
-        
-        chmfr = App.ActiveDocument.addObject("Part::Chamfer", "clamping_Holder2")
-        chmfr.Base = App.ActiveDocument.clamping_holder2
-        myEdges = []
-
-        myEdges.append((15, 0.5, 0.5))# (edge number, chamfer start length, chamfer end length)
-        myEdges.append((18, 0.5, 0.5))
-        myEdges.append((19, 0.5, 0.5))
-        myEdges.append((26, 0.5, 0.5))
-        myEdges.append((30, 0.5, 0.5))
-        myEdges.append((37, 0.5, 0.5))
-        
-        chmfr.Edges = myEdges
-        Gui.ActiveDocument.clamping_holder2.Visibility = False
-
-        App.ActiveDocument.recompute()
-    
-        chmfr.ViewObject.ShapeColor = (1.0,0.0,0.0)
+        clamping_holder2.ViewObject.ShapeColor = (0.0,0.0,192/255)
     
     else:
         print("no Lens")
     ###Clamping_Holder2_End#######################################################
     ###Clamping_Holder3##########################################################
     if LensBin==1:
-        #Cylinder
-        BossExtrude1=Part.makeCylinder(8/2,5)
-        CutExtrude1=Part.makeCylinder(4/2,5)
-        PartBossExtrude1=BossExtrude1.cut(CutExtrude1)
-        #Part.show(PartBossExtrude1)
-    
-
-        #Cutouts
-        CutExtrude2=Part.makeBox(3,1,1)
-        CutExtrude3=Part.makeBox(1,0.5,5)
-        CutExtrude4=Part.makeBox(3.4,3,5)
-        TranslationCutExtrude2=(1,-0.5,4)
-        TranslationCutExtrude3=(1.5,-0.25,0)
-        TranslationCutExtrude4=(-4,-1.7,0)
-        CutExtrude2.translate(TranslationCutExtrude2)
-        CutExtrude3.translate(TranslationCutExtrude3)
-        CutExtrude4.translate(TranslationCutExtrude4)
-        #Part.show(CutExtrude2)
-        #Part.show(CutExtrude3)
-        PartBossExtrude2=PartBossExtrude1.cut(CutExtrude2)
-        PartBossExtrude3=PartBossExtrude2.cut(CutExtrude3)
-        PartBossExtrude4=PartBossExtrude3.cut(CutExtrude4)
-        #Part.show(PartBossExtrude3)
-        clampingholderTranslation=(0,20.5,78-DLL)
-        PartBossExtrude4.translate(clampingholderTranslation)
         
-
-        #chamfer
-        clamping_holder3=App.ActiveDocument.addObject("Part::Feature", "clamping_holder3")
-        clamping_holder3.Shape=PartBossExtrude4
+        PartBossExtrude6 = PartBossExtrude4.copy()
+        clampingholderTranslation=(-20.5,20.5,0)
+        PartBossExtrude6.translate(clampingholderTranslation)
+        
+        #Display
+        clamping_holder3 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder3")
+        clamping_holder3.Shape=PartBossExtrude6
         clamping_holder3.Shape=clamping_holder3.Shape.removeSplitter()
-
-        chmfr = App.ActiveDocument.addObject("Part::Chamfer", "clamping_Holder3")
-        chmfr.Base = App.ActiveDocument.clamping_holder3
-        myEdges = []
-
-        myEdges.append((15, 0.5, 0.5))# (edge number, chamfer start length, chamfer end length)
-        myEdges.append((18, 0.5, 0.5))
-        myEdges.append((19, 0.5, 0.5))
-        myEdges.append((26, 0.5, 0.5))
-        myEdges.append((30, 0.5, 0.5))
-        myEdges.append((37, 0.5, 0.5))
+        clamping_holder3.ViewObject.ShapeColor = (0.0,0.0,192/255)
         
-        chmfr.Edges = myEdges
-        Gui.ActiveDocument.clamping_holder3.Visibility = False
-
-        App.ActiveDocument.recompute()
-    
-        chmfr.ViewObject.ShapeColor = (1.0,0.0,0.0)
     else:
         print("no Lens")
     ###Clamping_Holder3_End#######################################################
     ###Clamping_Holder4##########################################################
     if LensBin==1:
-        #Cylinder
-        BossExtrude1=Part.makeCylinder(8/2,5)
-        CutExtrude1=Part.makeCylinder(4/2,5)
-        PartBossExtrude1=BossExtrude1.cut(CutExtrude1)
-        #Part.show(PartBossExtrude1)
-    
-    
-        #Cutouts
-        CutExtrude2=Part.makeBox(3,1,1)
-        CutExtrude3=Part.makeBox(1,0.5,5)
-        CutExtrude4=Part.makeBox(3.4,3,5)
-        TranslationCutExtrude2=(1,-0.5,4)
-        TranslationCutExtrude3=(1.5,-0.25,0)
-        TranslationCutExtrude4=(-4,-1.7,0)
-        CutExtrude2.translate(TranslationCutExtrude2)
-        CutExtrude3.translate(TranslationCutExtrude3)
-        CutExtrude4.translate(TranslationCutExtrude4)
-        #Part.show(CutExtrude2)
-        #Part.show(CutExtrude3)
-        PartBossExtrude2=PartBossExtrude1.cut(CutExtrude2)
-        PartBossExtrude3=PartBossExtrude2.cut(CutExtrude3)
-        PartBossExtrude4=PartBossExtrude3.cut(CutExtrude4)
-        #Part.show(PartBossExtrude3)
-        clampingholderTranslation=(0,-20.5,78-DLL)
-        PartBossExtrude4.translate(clampingholderTranslation)
-    
-    
-        #chamfer
-        clamping_holder4=App.ActiveDocument.addObject("Part::Feature", "clamping_holder4")
-        clamping_holder4.Shape=PartBossExtrude4
+        
+        PartBossExtrude7 = PartBossExtrude4.copy()
+        clampingholderTranslation=(-20.5,-20.5,0)
+        PartBossExtrude7.translate(clampingholderTranslation)
+        
+        #Display
+        clamping_holder4 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder4")
+        clamping_holder4.Shape=PartBossExtrude7
         clamping_holder4.Shape=clamping_holder4.Shape.removeSplitter()
-        
-        chmfr = App.ActiveDocument.addObject("Part::Chamfer", "clamping_Holder4")
-        chmfr.Base = App.ActiveDocument.clamping_holder4
-        myEdges = []
-        
-        myEdges.append((15, 0.5, 0.5))# (edge number, chamfer start length, chamfer end length)
-        myEdges.append((18, 0.5, 0.5))
-        myEdges.append((19, 0.5, 0.5))
-        myEdges.append((26, 0.5, 0.5))
-        myEdges.append((30, 0.5, 0.5))
-        myEdges.append((37, 0.5, 0.5))
-
-        chmfr.Edges = myEdges
-        Gui.ActiveDocument.clamping_holder4.Visibility = False
-
-        App.ActiveDocument.recompute()
-            
-        chmfr.ViewObject.ShapeColor = (1.0,0.0,0.0)
+        clamping_holder4.ViewObject.ShapeColor = (0.0,0.0,192/255)
     else:
         print("no Lens")
     ###Clamping_Holder4_End#######################################################
     ###Clamping_Holder5##########################################################
-    #Cylinder
-    BossExtrude1=Part.makeCylinder(8/2,5)
-    CutExtrude1=Part.makeCylinder(4/2,5)
-    PartBossExtrude1=BossExtrude1.cut(CutExtrude1)
-    #Part.show(PartBossExtrude1)
     
-    
-    #Cutouts
-    CutExtrude2=Part.makeBox(3,1,1)
-    CutExtrude3=Part.makeBox(1,0.5,5)
-    CutExtrude4=Part.makeBox(3.4,3,5)
-    TranslationCutExtrude2=(1,-0.5,4)
-    TranslationCutExtrude3=(1.5,-0.25,0)
-    TranslationCutExtrude4=(-4,-1.7,0)
-    CutExtrude2.translate(TranslationCutExtrude2)
-    CutExtrude3.translate(TranslationCutExtrude3)
-    CutExtrude4.translate(TranslationCutExtrude4)
-    #Part.show(CutExtrude2)
-    #Part.show(CutExtrude3)
-    PartBossExtrude2=PartBossExtrude1.cut(CutExtrude2)
-    PartBossExtrude3=PartBossExtrude2.cut(CutExtrude3)
-    PartBossExtrude4=PartBossExtrude3.cut(CutExtrude4)
-    #Part.show(PartBossExtrude3)
-    clampingholderTranslation=(20.5,0,RodLength-19.5)
-    PartBossExtrude4.translate(clampingholderTranslation)
-
-
-    #chamfer
-    clamping_holder5=App.ActiveDocument.addObject("Part::Feature", "clamping_holder5")
-    clamping_holder5.Shape=PartBossExtrude4
+    PartBossExtrude8 = PartBossExtrude4.copy()
+    clampingholderTranslation=(0,0,RodLength-47.5)
+    PartBossExtrude8.translate(clampingholderTranslation)
+        
+    #Display
+    clamping_holder5 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder5")
+    clamping_holder5.Shape=PartBossExtrude8
     clamping_holder5.Shape=clamping_holder5.Shape.removeSplitter()
-    
-    chmfr = App.ActiveDocument.addObject("Part::Chamfer", "clamping_Holder5")
-    chmfr.Base = App.ActiveDocument.clamping_holder5
-    myEdges = []
-
-    myEdges.append((15, 0.5, 0.5))# (edge number, chamfer start length, chamfer end length)
-    myEdges.append((18, 0.5, 0.5))
-    myEdges.append((19, 0.5, 0.5))
-    myEdges.append((26, 0.5, 0.5))
-    myEdges.append((30, 0.5, 0.5))
-    myEdges.append((37, 0.5, 0.5))
-
-    chmfr.Edges = myEdges
-    Gui.ActiveDocument.clamping_holder5.Visibility = False
-
-    App.ActiveDocument.recompute()
-    
-    chmfr.ViewObject.ShapeColor = (1.0,0.0,0.0)
+    clamping_holder5.ViewObject.ShapeColor = (0.0,0.0,192/255)
     ###Clamping_Holder5_End#######################################################
     ###Clamping_Holder6##########################################################
-    #Cylinder
-    BossExtrude1=Part.makeCylinder(8/2,5)
-    CutExtrude1=Part.makeCylinder(4/2,5)
-    PartBossExtrude1=BossExtrude1.cut(CutExtrude1)
-    #Part.show(PartBossExtrude1)
-
-
-    #Cutouts
-    CutExtrude2=Part.makeBox(3,1,1)
-    CutExtrude3=Part.makeBox(1,0.5,5)
-    CutExtrude4=Part.makeBox(3.4,3,5)
-    TranslationCutExtrude2=(1,-0.5,4)
-    TranslationCutExtrude3=(1.5,-0.25,0)
-    TranslationCutExtrude4=(-4,-1.7,0)
-    CutExtrude2.translate(TranslationCutExtrude2)
-    CutExtrude3.translate(TranslationCutExtrude3)
-    CutExtrude4.translate(TranslationCutExtrude4)
-    #Part.show(CutExtrude2)
-    #Part.show(CutExtrude3)
-    PartBossExtrude2=PartBossExtrude1.cut(CutExtrude2)
-    PartBossExtrude3=PartBossExtrude2.cut(CutExtrude3)
-    PartBossExtrude4=PartBossExtrude3.cut(CutExtrude4)
-    #Part.show(PartBossExtrude3)
-    clampingholderTranslation=(-20.5,0,RodLength-19.5)
-    PartBossExtrude4.translate(clampingholderTranslation)
     
-
-    #chamfer
-    clamping_holder6=App.ActiveDocument.addObject("Part::Feature", "clamping_holder6")
-    clamping_holder6.Shape=PartBossExtrude4
+    PartBossExtrude9 = PartBossExtrude4.copy()
+    clampingholderTranslation=(-2*20.5,0,RodLength-47.5)
+    PartBossExtrude9.translate(clampingholderTranslation)
+        
+    #Display
+    clamping_holder6 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder6")
+    clamping_holder6.Shape=PartBossExtrude9
     clamping_holder6.Shape=clamping_holder6.Shape.removeSplitter()
-    
-    chmfr = App.ActiveDocument.addObject("Part::Chamfer", "clamping_Holder6")
-    chmfr.Base = App.ActiveDocument.clamping_holder6
-    myEdges = []
-    
-    myEdges.append((15, 0.5, 0.5))# (edge number, chamfer start length, chamfer end length)
-    myEdges.append((18, 0.5, 0.5))
-    myEdges.append((19, 0.5, 0.5))
-    myEdges.append((26, 0.5, 0.5))
-    myEdges.append((30, 0.5, 0.5))
-    myEdges.append((37, 0.5, 0.5))
-    
-    chmfr.Edges = myEdges
-    Gui.ActiveDocument.clamping_holder6.Visibility = False
-    
-    App.ActiveDocument.recompute()
-            
-    chmfr.ViewObject.ShapeColor = (1.0,0.0,0.0)
+    clamping_holder6.ViewObject.ShapeColor = (0.0,0.0,192/255)
     ###Clamping_Holder6_End#######################################################
     ###Clamping_Holder7##########################################################
-    #Cylinder
-    BossExtrude1=Part.makeCylinder(8/2,5)
-    CutExtrude1=Part.makeCylinder(4/2,5)
-    PartBossExtrude1=BossExtrude1.cut(CutExtrude1)
-    #Part.show(PartBossExtrude1)
     
-
-    #Cutouts
-    CutExtrude2=Part.makeBox(3,1,1)
-    CutExtrude3=Part.makeBox(1,0.5,5)
-    CutExtrude4=Part.makeBox(3.4,3,5)
-    TranslationCutExtrude2=(1,-0.5,4)
-    TranslationCutExtrude3=(1.5,-0.25,0)
-    TranslationCutExtrude4=(-4,-1.7,0)
-    CutExtrude2.translate(TranslationCutExtrude2)
-    CutExtrude3.translate(TranslationCutExtrude3)
-    CutExtrude4.translate(TranslationCutExtrude4)
-    #Part.show(CutExtrude2)
-    #Part.show(CutExtrude3)
-    PartBossExtrude2=PartBossExtrude1.cut(CutExtrude2)
-    PartBossExtrude3=PartBossExtrude2.cut(CutExtrude3)
-    PartBossExtrude4=PartBossExtrude3.cut(CutExtrude4)
-    #Part.show(PartBossExtrude3)
-    clampingholderTranslation=(0,20.5,RodLength-19.5)
-    PartBossExtrude4.translate(clampingholderTranslation)
-
-
-    #chamfer
-    clamping_holder7=App.ActiveDocument.addObject("Part::Feature", "clamping_holder7")
-    clamping_holder7.Shape=PartBossExtrude4
+    PartBossExtrude10 = PartBossExtrude4.copy()
+    clampingholderTranslation=(-20.5,20.5,RodLength-47.5)
+    PartBossExtrude10.translate(clampingholderTranslation)
+        
+    #Display
+    clamping_holder7 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder7")
+    clamping_holder7.Shape=PartBossExtrude10
     clamping_holder7.Shape=clamping_holder7.Shape.removeSplitter()
-
-    chmfr = App.ActiveDocument.addObject("Part::Chamfer", "clamping_Holder7")
-    chmfr.Base = App.ActiveDocument.clamping_holder7
-    myEdges = []
-
-    myEdges.append((15, 0.5, 0.5))# (edge number, chamfer start length, chamfer end length)
-    myEdges.append((18, 0.5, 0.5))
-    myEdges.append((19, 0.5, 0.5))
-    myEdges.append((26, 0.5, 0.5))
-    myEdges.append((30, 0.5, 0.5))
-    myEdges.append((37, 0.5, 0.5))
-    
-    chmfr.Edges = myEdges
-    Gui.ActiveDocument.clamping_holder7.Visibility = False
-    
-    App.ActiveDocument.recompute()
-            
-    chmfr.ViewObject.ShapeColor = (1.0,0.0,0.0)
+    clamping_holder7.ViewObject.ShapeColor = (0.0,0.0,192/255)
     ###Clamping_Holder7_End#######################################################
     ###Clamping_Holder8##########################################################
-    #Cylinder
-    BossExtrude1=Part.makeCylinder(8/2,5)
-    CutExtrude1=Part.makeCylinder(4/2,5)
-    PartBossExtrude1=BossExtrude1.cut(CutExtrude1)
-    #Part.show(PartBossExtrude1)
     
-
-    #Cutouts
-    CutExtrude2=Part.makeBox(3,1,1)
-    CutExtrude3=Part.makeBox(1,0.5,5)
-    CutExtrude4=Part.makeBox(3.4,3,5)
-    TranslationCutExtrude2=(1,-0.5,4)
-    TranslationCutExtrude3=(1.5,-0.25,0)
-    TranslationCutExtrude4=(-4,-1.7,0)
-    CutExtrude2.translate(TranslationCutExtrude2)
-    CutExtrude3.translate(TranslationCutExtrude3)
-    CutExtrude4.translate(TranslationCutExtrude4)
-    #Part.show(CutExtrude2)
-    #Part.show(CutExtrude3)
-    PartBossExtrude2=PartBossExtrude1.cut(CutExtrude2)
-    PartBossExtrude3=PartBossExtrude2.cut(CutExtrude3)
-    PartBossExtrude4=PartBossExtrude3.cut(CutExtrude4)
-    #Part.show(PartBossExtrude3)
-    #clampingholderTranslation=(0,-20.5,180.5)
-    clampingholderTranslation=(0,-20.5,RodLength-19.5)
-    PartBossExtrude4.translate(clampingholderTranslation)
-
-
-    #chamfer
-    clamping_holder8=App.ActiveDocument.addObject("Part::Feature", "clamping_holder8")
-    clamping_holder8.Shape=PartBossExtrude4
+    PartBossExtrude11 = PartBossExtrude4.copy()
+    clampingholderTranslation=(-20.5,-20.5,RodLength-47.5)
+    PartBossExtrude11.translate(clampingholderTranslation)
+        
+    #Display
+    clamping_holder8 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder8")
+    clamping_holder8.Shape=PartBossExtrude11
     clamping_holder8.Shape=clamping_holder8.Shape.removeSplitter()
-
-    chmfr = App.ActiveDocument.addObject("Part::Chamfer", "clamping_Holder8")
-    chmfr.Base = App.ActiveDocument.clamping_holder8
-    myEdges = []
-
-    myEdges.append((15, 0.5, 0.5))# (edge number, chamfer start length, chamfer end length)
-    myEdges.append((18, 0.5, 0.5))
-    myEdges.append((19, 0.5, 0.5))
-    myEdges.append((26, 0.5, 0.5))
-    myEdges.append((30, 0.5, 0.5))
-    myEdges.append((37, 0.5, 0.5))
-    
-    chmfr.Edges = myEdges
-    Gui.ActiveDocument.clamping_holder8.Visibility = False
-
-    App.ActiveDocument.recompute()
-            
-    chmfr.ViewObject.ShapeColor = (1.0,0.0,0.0)
+    clamping_holder8.ViewObject.ShapeColor = (0.0,0.0,192/255)
     ###Clamping_Holder8_End#######################################################
     ###Shroud-Mount############################################################
     ##Base
@@ -2432,187 +1702,13 @@ def make_parts(csv_filename):						#Plot Part
     #Part.show(BossExtrude5)
     
     ######################################################################################################################################################
-
-    #BasePart
-    BasePart=Part.makeBox(90,45,15)
-    #Part.show(BasePart)
     
-    ##Drillings
-    #BigDrillings
-    BigDrilling=Part.makeCylinder(9/2,15)
-    TranslationBigDrilling=(15,22.5,0)
-    BigDrilling.translate(TranslationBigDrilling)
-    BossExtrude1=BasePart.cut(BigDrilling)
-    #Part.show(BigDrilling)
-    TranslationBigDrilling=(30,0,0)
-    BigDrilling.translate(TranslationBigDrilling)
-    BossExtrude2=BossExtrude1.cut(BigDrilling)
-    #Part.show(BigDrilling)
-    TranslationBigDrilling=(30,0,0)
-    BigDrilling.translate(TranslationBigDrilling)
-    BossExtrude3=BossExtrude2.cut(BigDrilling)
-    #Part.show(BigDrilling)
-
-    #middleDrillings
-    middleDrilling=Part.makeCylinder(5/2,15)
-    TranslationmiddleDrilling=(29,22.5,0)
-    middleDrilling.translate(TranslationmiddleDrilling)
-    BossExtrude4=BossExtrude3.cut(middleDrilling)
-    #Part.show(middleDrilling)
-    TranslationmiddleDrilling=(8,8,0)
-    middleDrilling.translate(TranslationmiddleDrilling)
-    BossExtrude5=BossExtrude4.cut(middleDrilling)
-    #Part.show(middleDrilling)
-    TranslationmiddleDrilling=(16,0,0)
-    middleDrilling.translate(TranslationmiddleDrilling)
-    BossExtrude6=BossExtrude5.cut(middleDrilling)
-    #Part.show(middleDrilling)
-    TranslationmiddleDrilling=(8,-8,0)
-    middleDrilling.translate(TranslationmiddleDrilling)
-    BossExtrude7=BossExtrude6.cut(middleDrilling)
-    #Part.show(middleDrilling)
-    TranslationmiddleDrilling=(-8,-8,0)
-    middleDrilling.translate(TranslationmiddleDrilling)
-    BossExtrude8=BossExtrude7.cut(middleDrilling)
-    #Part.show(middleDrilling)
-    TranslationmiddleDrilling=(-16,0,0)
-    middleDrilling.translate(TranslationmiddleDrilling)
-    BossExtrude9=BossExtrude8.cut(middleDrilling)
-    #Part.show(middleDrilling)
-
-    #recessmiddleDrillings
-    recess=Part.makeCylinder(6.4/2,0.8)
-    Translationrecess=(29,22.5,15-0.8)
-    recess.translate(Translationrecess)
-    BossExtrude10=BossExtrude9.cut(recess)
-    #Part.show(recess)
-    Translationrecess=(8,8,0)
-    recess.translate(Translationrecess)
-    BossExtrude11=BossExtrude10.cut(recess)
-    #Part.show(recess)
-    Translationrecess=(16,0,0)
-    recess.translate(Translationrecess)
-    BossExtrude12=BossExtrude11.cut(recess)
-    #Part.show(recess)
-    Translationrecess=(8,-8,0)
-    recess.translate(Translationrecess)
-    BossExtrude13=BossExtrude12.cut(recess)
-    #Part.show(recess)
-    Translationrecess=(-8,-8,0)
-    recess.translate(Translationrecess)
-    BossExtrude14=BossExtrude13.cut(recess)
-    #Part.show(recess)
-    Translationrecess=(-16,0,0)
-    recess.translate(Translationrecess)
-    BossExtrude15=BossExtrude14.cut(recess)
-    #Part.show(recess)
-
-    #smallDrillings
-    smallDrilling=Part.makeCylinder(4.2/2,15)
-    TranslationsmallDrilling=(2,15,0)
-    smallDrilling.translate(TranslationsmallDrilling)
-    insert=Part.makeBox(1,3.2,15)
-    Translationinsert=(0,15-3.2/2,0)
-    insert.translate(Translationinsert)
-    BossExtrude16=BossExtrude15.cut(smallDrilling)
-    BossExtrude17=BossExtrude16.cut(insert)
-    #Part.show(smallDrilling)
-    #Part.show(insert)
-
-    TranslationsmallDrilling=(0,15,0)
-    smallDrilling.translate(TranslationsmallDrilling)
-    Translationinsert=(0,15,0)
-    insert.translate(Translationinsert)
-    BossExtrude18=BossExtrude17.cut(smallDrilling)
-    BossExtrude19=BossExtrude18.cut(insert)
-    #Part.show(smallDrilling)
-    #Part.show(insert)
     
-    TranslationsmallDrilling=(86,0,0)
-    smallDrilling.translate(TranslationsmallDrilling)
-    Translationinsert=(89,0,0)
-    insert.translate(Translationinsert)
-    BossExtrude20=BossExtrude19.cut(smallDrilling)
-    BossExtrude21=BossExtrude20.cut(insert)
-    #Part.show(smallDrilling)
-    #Part.show(insert)
-
-    TranslationsmallDrilling=(0,-15,0)
-    smallDrilling.translate(TranslationsmallDrilling)
-    Translationinsert=(0,-15,0)
-    insert.translate(Translationinsert)
-    BossExtrude22=BossExtrude21.cut(smallDrilling)
-    BossExtrude23=BossExtrude22.cut(insert)
-    #Part.show(smallDrilling)
-    #Part.show(insert)
-
-    
-    #Stab
-    stabholder=Part.makeBox(5.5,8.5,4.1)
-    Translationstabholder=(15,3.25,15-4.1)
-    stabholder.translate(Translationstabholder)
-    BossExtrude24=BossExtrude23.cut(stabholder)
-    #Part.show(stabholder)
-    Translationstabholder=(0,30,0)
-    stabholder.translate(Translationstabholder)
-    BossExtrude25=BossExtrude24.cut(stabholder)
-    #Part.show(stabholder)
-    Translationstabholder=(54.5,0,0)
-    stabholder.translate(Translationstabholder)
-    BossExtrude26=BossExtrude25.cut(stabholder)
-    #Part.show(stabholder)
-    Translationstabholder=(0,-30,0)
-    stabholder.translate(Translationstabholder)
-    BossExtrude27=BossExtrude26.cut(stabholder)
-    #Part.show(stabholder)
-    
-    stabdrilling=Part.makeCylinder(4.2/2,90)
-    stabdrilling.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 90)
-    Translationstabdrilling=(0,7.5,13)
-    stabdrilling.translate(Translationstabdrilling)
-    BossExtrude28=BossExtrude27.cut(stabdrilling)
-    #Part.show(stabdrilling)
-
-    Translationstabdrilling=(0,30,0)
-    stabdrilling.translate(Translationstabdrilling)
-    BossExtrude29=BossExtrude28.cut(stabdrilling)
-    #Part.show(stabdrilling)
-    
-    stabrecess=Part.makeBox(90,3.2,1)
-    Translationstabrecess=(0,7.5-3.2/2,15-1)
-    stabrecess.translate(Translationstabrecess)
-    BossExtrude30=BossExtrude29.cut(stabrecess)
-    Translationstabrecess=(0,30,0)
-    stabrecess.translate(Translationstabrecess)
-    BossExtrude31=BossExtrude30.cut(stabrecess)
-
-    #Fillets
-    Cut1=Part.makeBox(4,4,15)
-    Cut2=Part.makeCylinder(4,15)
-    Cut3=Cut1.cut(Cut2)
-    filletTranslation=(90-4,45-4,0)
-    Cut3.translate(filletTranslation)
-    BossExtrude32=BossExtrude31.cut(Cut3)
-    #Part.show(Cut3)
-
-    Cut3.rotate(Base.Vector(90-4, 45-4, 0),Base.Vector(0, 0, 1), -90)
-    filletTranslation=(0,-45+8,0)
-    Cut3.translate(filletTranslation)
-    #Part.show(Cut3)
-    BossExtrude33=BossExtrude32.cut(Cut3)
-
-    Cut3.rotate(Base.Vector(90-4, 0, 0),Base.Vector(0, 0, 1), -90)
-    filletTranslation=(-90+4,4,0)
-    Cut3.translate(filletTranslation)
-    #Part.show(Cut3)
-    BossExtrude34=BossExtrude33.cut(Cut3)
-    
-    Cut3.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), -90)
-    filletTranslation=(0,45,0)
-    Cut3.translate(filletTranslation)
-    #Part.show(Cut3)
-    BossExtrude35=BossExtrude34.cut(Cut3)
-    
+    #STEP-Import-Mount
+    BossExtrude35 = Part.Shape()
+    source = os.path.join(source_path, mount_filename + '.step')
+    BossExtrude35.read(source)
+    #BossExtrude35.read(u"C:/Users/Steffen/Desktop/Source/Mound.STEP")
 
     
     

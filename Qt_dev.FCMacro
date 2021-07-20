@@ -2,7 +2,8 @@
 
 import sys
 
-sys.path.append('C:/Users/usf/Python/Morphoa')
+#sys.path.append('C:/Users/usf/Python/Morphoa')
+sys.path.append('C:/Users/Steffen/Desktop/ITO/070_Git')
 
 from doe_config.gui import MainWindow
 

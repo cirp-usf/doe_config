@@ -7,8 +7,10 @@ from .cad import make_parts, close_document, save_parts
 
 global switch ; switch = 0
 
-csv_filename = '/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei_write.csv'
-csv_filename = '/Users/usf/Morphoa/Steffen/testdatei_write.csv'
+#csv_filename = '/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei_write.csv'
+csv_filename = 'C:/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei_write.csv'
+
+#csv_filename = '/Users/usf/Morphoa/Steffen/testdatei_write.csv'
 
 
 try:
