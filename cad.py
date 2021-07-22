@@ -451,6 +451,7 @@ def make_parts(csv_filename):						#Plot Part
     ###Rod4_End###############################################################
     ###Lens-Holder#############################################################
     if LensBin==1:
+        '''
         #Definition
         #DL=16.2
         ##DL=8.9*2
@@ -469,7 +470,7 @@ def make_parts(csv_filename):						#Plot Part
         #HoleTolerance=0
         #RectangleTolerance=0
         #ToleranceNubble=0
-
+        
 
 	        
         #OuterRing
@@ -761,7 +762,18 @@ def make_parts(csv_filename):						#Plot Part
             
         #Holder4.ViewObject.ShapeColor = (103/204,125/204,204/204)
         chmfr.ViewObject.ShapeColor = (103/204,125/204,0.0)
-    
+        '''
+        LensHolder = make_holder(DL,Thickness)
+        
+        TranslationLensHolder=(0,0,83-DLL)
+        LensHolder.translate(TranslationLensHolder)
+        
+        Holder1 = App.ActiveDocument.addObject("Part::Feature", "LensHolder")
+        Holder1.Shape=LensHolder
+        Holder1.Shape=Holder1.Shape.removeSplitter()
+        Holder1.ViewObject.ShapeColor = (103/204,125/204,0.0)
+        
+        
     else:
         print("no Lens")
     ###Lens-Holder_End##########################################################
@@ -811,11 +823,12 @@ def make_parts(csv_filename):						#Plot Part
         Lens.Shape=Lens.Shape.removeSplitter()
         Lens.ViewObject.ShapeColor = (152/255,245/255,255/255)
         Lens.ViewObject.Transparency=50
-
+       
     else:
         print("no Lens")
     ###Lens_End##############################################################
     ###Laser-Holder1############################################################
+    '''
     #Definition
     #DL=16.2
     ##LHD=7.9*2
@@ -1107,10 +1120,22 @@ def make_parts(csv_filename):						#Plot Part
     
     #Holder4.ViewObject.ShapeColor = (103/204,125/204,204/204)
     chmfr.ViewObject.ShapeColor = (103/204,125/204,0.0)
-
+    '''
+    LaserHolder1 = make_holder(LHD,15)
+        
+    TranslationLaserHolder1=(0,0,RodLength-31-LL)
+    LaserHolder1.translate(TranslationLaserHolder1)
+        
+    Holder1 = App.ActiveDocument.addObject("Part::Feature", "LaserHolder1")
+    Holder1.Shape=LaserHolder1
+    Holder1.Shape=Holder1.Shape.removeSplitter()
+    Holder1.ViewObject.ShapeColor = (103/204,125/204,0.0)
+   
+    
     ###Laser-Holder1_End#########################################################
     
     ###Laser-Holder2############################################################
+    '''
     #Definition
     #DL=16.2
     ##LHD=7.9*2
@@ -1399,6 +1424,17 @@ def make_parts(csv_filename):						#Plot Part
     
     #Holder4.ViewObject.ShapeColor = (103/204,125/204,204/204)
     chmfr.ViewObject.ShapeColor = (103/204,125/204,0.0)
+    '''
+    LaserHolder2 = LaserHolder1.copy()
+        
+    TranslationLaserHolder2=(0,0,31+LL-37.5)
+    #TranslationLaserHolder2=(0,0,-(RodLength-31-LL)+RodLength-37.5)
+    LaserHolder2.translate(TranslationLaserHolder2)
+        
+    Holder2 = App.ActiveDocument.addObject("Part::Feature", "LaserHolder2")
+    Holder2.Shape=LaserHolder2
+    Holder2.Shape=Holder2.Shape.removeSplitter()
+    Holder2.ViewObject.ShapeColor = (103/204,125/204,0.0)
     ###Laser-Holder2_End##########################################################
     
     ###Laser##################################################################
@@ -1511,7 +1547,7 @@ def make_parts(csv_filename):						#Plot Part
         clamping_holder1 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder1")
         clamping_holder1.Shape=PartBossExtrude4
         clamping_holder1.Shape=clamping_holder1.Shape.removeSplitter()
-        clamping_holder1.ViewObject.ShapeColor = (0.0,0.0,192/255)
+        clamping_holder1.ViewObject.ShapeColor = (1.0,0.0,0.0)
         
         
     else:
@@ -1529,7 +1565,7 @@ def make_parts(csv_filename):						#Plot Part
         clamping_holder2 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder2")
         clamping_holder2.Shape=PartBossExtrude5
         clamping_holder2.Shape=clamping_holder2.Shape.removeSplitter()
-        clamping_holder2.ViewObject.ShapeColor = (0.0,0.0,192/255)
+        clamping_holder2.ViewObject.ShapeColor = (1.0,0.0,0.0)
     
     else:
         print("no Lens")
@@ -1545,7 +1581,7 @@ def make_parts(csv_filename):						#Plot Part
         clamping_holder3 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder3")
         clamping_holder3.Shape=PartBossExtrude6
         clamping_holder3.Shape=clamping_holder3.Shape.removeSplitter()
-        clamping_holder3.ViewObject.ShapeColor = (0.0,0.0,192/255)
+        clamping_holder3.ViewObject.ShapeColor = (1.0,0.0,0.0)
         
     else:
         print("no Lens")
@@ -1561,57 +1597,57 @@ def make_parts(csv_filename):						#Plot Part
         clamping_holder4 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder4")
         clamping_holder4.Shape=PartBossExtrude7
         clamping_holder4.Shape=clamping_holder4.Shape.removeSplitter()
-        clamping_holder4.ViewObject.ShapeColor = (0.0,0.0,192/255)
+        clamping_holder4.ViewObject.ShapeColor = (1.0,0.0,0.0)
     else:
         print("no Lens")
     ###Clamping_Holder4_End#######################################################
     ###Clamping_Holder5##########################################################
     
     PartBossExtrude8 = PartBossExtrude4.copy()
-    clampingholderTranslation=(0,0,RodLength-47.5)
+    clampingholderTranslation=(0,0,-(78-DLL)+RodLength-19.5)
     PartBossExtrude8.translate(clampingholderTranslation)
         
     #Display
     clamping_holder5 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder5")
     clamping_holder5.Shape=PartBossExtrude8
     clamping_holder5.Shape=clamping_holder5.Shape.removeSplitter()
-    clamping_holder5.ViewObject.ShapeColor = (0.0,0.0,192/255)
+    clamping_holder5.ViewObject.ShapeColor = (1.0,0.0,0.0)
     ###Clamping_Holder5_End#######################################################
     ###Clamping_Holder6##########################################################
     
     PartBossExtrude9 = PartBossExtrude4.copy()
-    clampingholderTranslation=(-2*20.5,0,RodLength-47.5)
+    clampingholderTranslation=(-2*20.5,0,-(78-DLL)+RodLength-19.5)
     PartBossExtrude9.translate(clampingholderTranslation)
         
     #Display
     clamping_holder6 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder6")
     clamping_holder6.Shape=PartBossExtrude9
     clamping_holder6.Shape=clamping_holder6.Shape.removeSplitter()
-    clamping_holder6.ViewObject.ShapeColor = (0.0,0.0,192/255)
+    clamping_holder6.ViewObject.ShapeColor = (1.0,0.0,0.0)
     ###Clamping_Holder6_End#######################################################
     ###Clamping_Holder7##########################################################
     
     PartBossExtrude10 = PartBossExtrude4.copy()
-    clampingholderTranslation=(-20.5,20.5,RodLength-47.5)
+    clampingholderTranslation=(-20.5,20.5,-(78-DLL)+RodLength-19.5)
     PartBossExtrude10.translate(clampingholderTranslation)
         
     #Display
     clamping_holder7 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder7")
     clamping_holder7.Shape=PartBossExtrude10
     clamping_holder7.Shape=clamping_holder7.Shape.removeSplitter()
-    clamping_holder7.ViewObject.ShapeColor = (0.0,0.0,192/255)
+    clamping_holder7.ViewObject.ShapeColor = (1.0,0.0,0.0)
     ###Clamping_Holder7_End#######################################################
     ###Clamping_Holder8##########################################################
     
     PartBossExtrude11 = PartBossExtrude4.copy()
-    clampingholderTranslation=(-20.5,-20.5,RodLength-47.5)
+    clampingholderTranslation=(-20.5,-20.5,-(78-DLL)+RodLength-19.5)
     PartBossExtrude11.translate(clampingholderTranslation)
         
     #Display
     clamping_holder8 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder8")
     clamping_holder8.Shape=PartBossExtrude11
     clamping_holder8.Shape=clamping_holder8.Shape.removeSplitter()
-    clamping_holder8.ViewObject.ShapeColor = (0.0,0.0,192/255)
+    clamping_holder8.ViewObject.ShapeColor = (1.0,0.0,0.0)
     ###Clamping_Holder8_End#######################################################
     ###Shroud-Mount############################################################
     ##Base
