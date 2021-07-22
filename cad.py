@@ -352,104 +352,55 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     chmfr.ViewObject.ShapeColor = (232/255,113/225,8/225)
     ###DOE-Holder3_End###########################################################
     ###Rod1##################################################################
-    #BossExtrude1
-    BossExtrude1=Part.makeCylinder(4/2,RodLength)
-    #Part.show(BossExtrude1)
+    rod_shape = Part.makeCylinder(4/2,RodLength)
+    #Fillets
+    eds = [rod_shape.Edges[0], rod_shape.Edges[2]]
+    rod_shape = rod_shape.makeFillet(0.5, eds)
+
+    BossExtrude1 = rod_shape.copy()
+
     TranslationRod1=(20.5,0,-15)
     BossExtrude1.translate(TranslationRod1)
     
-    #Fillets
-    Rod1=App.ActiveDocument.addObject("Part::Feature", "Rod1")
-    Rod1.Shape=BossExtrude1
-
-
-
-    App.ActiveDocument.addObject("Part::Fillet","MetalRod1")
-    App.ActiveDocument.MetalRod1.Base = App.ActiveDocument.Rod1
-    __fillets__ = []
-    __fillets__.append((1,0.50,0.50))
-    __fillets__.append((3,0.50,0.50))
-    App.ActiveDocument.MetalRod1.Edges = __fillets__
-    del __fillets__
-
+    Rod1 = App.ActiveDocument.addObject("Part::Feature", "Rod1")
+    Rod1.Shape = BossExtrude1
     Rod1.ViewObject.ShapeColor = (0.3,0.3,0.3)
-    Gui.ActiveDocument.Rod1.Visibility = False
-    App.ActiveDocument.recompute()
     ###Rod1_End###############################################################
+
     ###Rod2##################################################################
-    #BossExtrude1
-    BossExtrude1=Part.makeCylinder(4/2,RodLength)
-    #Part.show(BossExtrude1)
+    BossExtrude1 = rod_shape.copy()
+
     TranslationRod2=(-20.5,0,-15)
     BossExtrude1.translate(TranslationRod2)
 
-    #Fillets
-    Rod2=App.ActiveDocument.addObject("Part::Feature", "Rod2")
-    Rod2.Shape=BossExtrude1
-
-
-
-    App.ActiveDocument.addObject("Part::Fillet","MetalRod2")
-    App.ActiveDocument.MetalRod2.Base = App.ActiveDocument.Rod2
-    __fillets__ = []
-    __fillets__.append((1,0.50,0.50))
-    __fillets__.append((3,0.50,0.50))
-    App.ActiveDocument.MetalRod2.Edges = __fillets__
-    del __fillets__
-
+    Rod2 = App.ActiveDocument.addObject("Part::Feature", "Rod2")
+    Rod2.Shape = BossExtrude1
     Rod2.ViewObject.ShapeColor = (0.3,0.3,0.3)
-    Gui.ActiveDocument.Rod2.Visibility = False
-    App.ActiveDocument.recompute()
+
     ###Rod2_End###############################################################
     ###Rod3##################################################################
-    #BossExtrude1
-    BossExtrude1=Part.makeCylinder(4/2,RodLength)
-    #Part.show(BossExtrude1)
+    BossExtrude1 = rod_shape.copy()
+
     TranslationRod3=(0,20.5,-15)
     BossExtrude1.translate(TranslationRod3)
 
     #Fillets
-    Rod3=App.ActiveDocument.addObject("Part::Feature", "Rod3")
-    Rod3.Shape=BossExtrude1
-
-    
-
-    App.ActiveDocument.addObject("Part::Fillet","MetalRod3")
-    App.ActiveDocument.MetalRod3.Base = App.ActiveDocument.Rod3
-    __fillets__ = []
-    __fillets__.append((1,0.50,0.50))
-    __fillets__.append((3,0.50,0.50))
-    App.ActiveDocument.MetalRod3.Edges = __fillets__
-    del __fillets__
+    Rod3 = App.ActiveDocument.addObject("Part::Feature", "Rod3")
+    Rod3.Shape = BossExtrude1
 
     Rod3.ViewObject.ShapeColor = (0.3,0.3,0.3)
-    Gui.ActiveDocument.Rod3.Visibility = False
-    App.ActiveDocument.recompute()
+
     ###Rod3_End###############################################################
     ###Rod4##################################################################
-    #BossExtrude1
-    BossExtrude1=Part.makeCylinder(4/2,RodLength)
-    #Part.show(BossExtrude1)
+
+    BossExtrude1 = rod_shape.copy()
+
     TranslationRod4=(0,-20.5,-15)
     BossExtrude1.translate(TranslationRod4)
 
-    #Fillets
-    Rod4=App.ActiveDocument.addObject("Part::Feature", "Rod4")
-    Rod4.Shape=BossExtrude1
-
-
-
-    App.ActiveDocument.addObject("Part::Fillet","MetalRod4")
-    App.ActiveDocument.MetalRod4.Base = App.ActiveDocument.Rod4
-    __fillets__ = []
-    __fillets__.append((1,0.50,0.50))
-    __fillets__.append((3,0.50,0.50))
-    App.ActiveDocument.MetalRod4.Edges = __fillets__
-    del __fillets__
-
+    Rod4 = App.ActiveDocument.addObject("Part::Feature", "Rod4")
+    Rod4.Shape = BossExtrude1
     Rod4.ViewObject.ShapeColor = (0.3,0.3,0.3)
-    Gui.ActiveDocument.Rod4.Visibility = False
-    App.ActiveDocument.recompute()
     ###Rod4_End###############################################################
     ###Lens-Holder#############################################################
     if LensBin==1:
