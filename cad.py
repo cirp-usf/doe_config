@@ -262,30 +262,34 @@ def make_holder(Diameter, Thickness):
 
 
 
-def make_parts(csv_filename):						#Plot Part
-    #Definition of Values
-    csvdatei = open(csv_filename,"r")
-    csv_reader = csv.reader(csvdatei, delimiter=';')
-    zeilennummer = 0
-    for row in csv_reader:
-        if zeilennummer == 0:
-            print(f'Spaltennamen sind: {", ".join(row)}')
-        else:
-            Width=float(row[0])
-            Height=float(row[1])
-            DL=float(row[2])
-            Thickness=float(row[3])
-            LHD=float(row[4])
-            RodLength=int(row[5])
-            LensBin= int(row[6])
-            LL=float(row[7])
-            DLL= float(row[8])
-            Mount = int(row[11])
-
-
-        zeilennummer += 1
+def make_parts(*, csv_filename=None, params=None):						#Plot Part
     
-    csvdatei.close()
+    if csv_filename is not None:
+        with open(csv_filename,"r") as csvdatei:
+            csv_reader = csv.reader(csvdatei, delimiter=';')
+            zeilennummer = 0
+            for row in csv_reader:
+                if zeilennummer == 0:
+                    print(f'Spaltennamen sind: {", ".join(row)}')
+                else:
+                    Width=float(row[0])
+                    Height=float(row[1])
+                    DL=float(row[2])
+                    Thickness=float(row[3])
+                    LHD=float(row[4])
+                    RodLength=int(row[5])
+                    LensBin= int(row[6])
+                    LL=float(row[7])
+                    DLL= float(row[8])
+                    Mount = int(row[9])
+
+                zeilennummer += 1
+
+    elif params is not None:
+        Width, Height, DL, Thickness, LHD, RodLength, LensBin, LL, DLL, Mount = params
+    else:
+        raise TypeError('Either csv_filename or params must be given')
+            
 
     create_doc()
     

@@ -2,15 +2,16 @@ import FreeCAD as App
 import PySide
 from PySide import QtCore, QtGui
 import csv
+import os.path
+import os
+from stat import S_ISDIR
 
 from .cad import make_parts, close_document, save_parts
 
 global switch ; switch = 0
 
-#csv_filename = '/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei_write.csv'
-csv_filename = 'C:/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei_write.csv'
+csv_filename = 'testdatei_write.csv'
 
-#csv_filename = '/Users/usf/Morphoa/Steffen/testdatei_write.csv'
 
 
 try:
@@ -29,7 +30,7 @@ except AttributeError:
  
 class Ui_MainWindow(object):
     def __init__(self):
-        self.old_params = None
+        self.params = None
     
     def setupUi(self, MainWindow):
         self.window = MainWindow
@@ -1044,7 +1045,17 @@ class Ui_MainWindow(object):
         print( val_WorkingDistance)
         #
 
-    def read_parameters_and_save(self, filename):
+
+    def save_parameters(self, filename):
+        Width, Height, DL, Thickness, LHD, RodLength, LensBin, LL, DLL, Mount = self.params
+        with open(filename,"w", newline='') as csvdatei:
+            csv_writer = csv.writer(csvdatei, delimiter=';')
+            csv_writer.writerow(["DOE Hole Width","DOE Hole Height","Lens Diameter","Lens Holder Depth","Laser Diameter","Rod Length","Lens","Laser Length", "Dist. Laser Lens","mounting"])
+            csv_writer.writerow([Height,Width,DL,Thickness,LHD,RodLength,LensBin,LL,DLL,Mount])
+
+
+
+    def read_parameters(self):
         #Definition of Values
         Height = float(self.lineEdit_1.text())
         Height = round(Height,1)
@@ -1085,24 +1096,6 @@ class Ui_MainWindow(object):
             print("Lens no")
             LensBin = 0
 
-
-        comp = self.lineEdit_2.text()
-        g=self.cb2.currentIndex()
-        if g==0:
-            format_ = ".stl"
-        elif g==1:
-            format_ = ".step"
-        elif g==2:
-            format_ = ".FreeCAD"
-            
-
-        csvdatei = open(filename,"w", newline='')
-        csv_writer = csv.writer(csvdatei, delimiter=';')
-
-        csv_writer.writerow(["DOE Hole Width","DOE Hole Height","Lens Diameter","Lens Holder Depth","Laser Diameter","Rod Length","Lens","Laser Length", "Dist. Laser Lens", "comp. location","file format","mounting"])
-        csv_writer.writerow([Height,Width,DL,Thickness,LHD,RodLength,LensBin,LL,DLL,comp,format_,Mount])
-
-        csvdatei.close()    
         new_params = ( 
                 Width,
                 Height,
@@ -1115,29 +1108,31 @@ class Ui_MainWindow(object):
                 DLL,
                 Mount,
                 )
-        if self.old_params is None:
-            params_changed = True
-        else:
-            params_changed = False
-            for p1, p2 in zip(self.old_params, new_params):
-                if p1 != p2:
-                    params_changed = True
-                    break
-        self.old_params = new_params
+        params_changed = not (self.params == new_params)
+        self.params = new_params
         return params_changed
 
     # Buttons
     def on_pushButton_3_clicked(self):    # Button Save                                     # connection on_pushButton_3_clicked
-        changed = self.read_parameters_and_save(csv_filename)
+        changed = self.read_parameters()
         if changed:
             # Only recompute parts if parameters changed
-            make_parts(csv_filename)
+            make_parts(params=self.params)
 
         format_ = self.cb2.currentIndex()
         lens = self.cb1.currentIndex()
         dest = self.lineEdit_2.text()
         self.lineEdit_2.setText(str(dest))
-        save_parts(format_, lens, dest)
+        try:
+            mode = os.stat(dest).st_mode
+        except FileNotFoundError:
+            print('Folder "{}" not found.'.format(dest))
+            return
+        if S_ISDIR(mode):
+            self.save_parameters(os.path.join(dest, csv_filename))
+            save_parts(format_, lens, dest)
+        else:
+            print('"{}" is not a valid folder.'.format(dest))
 
         self.pushButton_1.setStyleSheet("background-color: QPalette.Base")                  # origin system color pushButton_1
         App.Console.PrintMessage("Save\r\n")
@@ -1209,10 +1204,10 @@ class Ui_MainWindow(object):
         #here your code
         #
         print( "Apply")
-        changed = self.read_parameters_and_save(csv_filename)
+        changed = self.read_parameters()
         if changed:
             # Only recompute parts if parameters changed
-            make_parts(csv_filename)
+            make_parts(params=self.params)
 
     def on_pushButton_5_clicked(self):    # make Suggestion for Laser                                     # connection on_pushButton_2_clicked
         #
