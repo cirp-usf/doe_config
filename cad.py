@@ -21,6 +21,7 @@ doe_halter_filename = 'DOE-Halter_01_D25___V05'
 deckel_filename = 'Deckel___V03'
 mount_filename = 'Mount'
 clamping_Holder_filename = 'FT_Klemmbuchse5_37679_dummie___V02'
+rod_filename = 'Rod_'
 
 
 RotCenter0 = Base.Vector(0, 0, 0)
@@ -351,57 +352,40 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     
     chmfr.ViewObject.ShapeColor = (232/255,113/225,8/225)
     ###DOE-Holder3_End###########################################################
-    ###Rod1##################################################################
-    rod_shape = Part.makeCylinder(4/2,RodLength)
-    #Fillets
-    eds = [rod_shape.Edges[0], rod_shape.Edges[2]]
-    rod_shape = rod_shape.makeFillet(0.5, eds)
-
-    BossExtrude1 = rod_shape.copy()
-
-    TranslationRod1=(20.5,0,-15)
-    BossExtrude1.translate(TranslationRod1)
+    ###Rods##################################################################
+    #STEP-Import-Rod
+    rod_shape = Part.Shape()
+    source = os.path.join(source_path, rod_filename + str(RodLength) + '.step')
+    rod_shape.read(source)
+    
+    #TranslationRod1=(0,0,0)
+    #rod_shape_test.translate(TranslationRod1)
     
     Rod1 = App.ActiveDocument.addObject("Part::Feature", "Rod1")
-    Rod1.Shape = BossExtrude1
+    Rod1.Shape = rod_shape
     Rod1.ViewObject.ShapeColor = (0.3,0.3,0.3)
-    ###Rod1_End###############################################################
-
-    ###Rod2##################################################################
-    BossExtrude1 = rod_shape.copy()
-
-    TranslationRod2=(-20.5,0,-15)
-    BossExtrude1.translate(TranslationRod2)
-
+    
+    TranslationRod2=(-20.5*2,0,0)
+    rod_shape.translate(TranslationRod2) 
+    
     Rod2 = App.ActiveDocument.addObject("Part::Feature", "Rod2")
-    Rod2.Shape = BossExtrude1
+    Rod2.Shape = rod_shape
     Rod2.ViewObject.ShapeColor = (0.3,0.3,0.3)
-
-    ###Rod2_End###############################################################
-    ###Rod3##################################################################
-    BossExtrude1 = rod_shape.copy()
-
-    TranslationRod3=(0,20.5,-15)
-    BossExtrude1.translate(TranslationRod3)
-
-    #Fillets
+    
+    TranslationRod3=(20.5,20.5,0)
+    rod_shape.translate(TranslationRod3) 
+    
     Rod3 = App.ActiveDocument.addObject("Part::Feature", "Rod3")
-    Rod3.Shape = BossExtrude1
-
+    Rod3.Shape = rod_shape
     Rod3.ViewObject.ShapeColor = (0.3,0.3,0.3)
-
-    ###Rod3_End###############################################################
-    ###Rod4##################################################################
-
-    BossExtrude1 = rod_shape.copy()
-
-    TranslationRod4=(0,-20.5,-15)
-    BossExtrude1.translate(TranslationRod4)
-
+    
+    TranslationRod4=(0,-2*20.5,0)
+    rod_shape.translate(TranslationRod4) 
+    
     Rod4 = App.ActiveDocument.addObject("Part::Feature", "Rod4")
-    Rod4.Shape = BossExtrude1
+    Rod4.Shape = rod_shape
     Rod4.ViewObject.ShapeColor = (0.3,0.3,0.3)
-    ###Rod4_End###############################################################
+    ###Rods_End###############################################################
     ###Lens-Holder#############################################################
     if LensBin==1:
         
