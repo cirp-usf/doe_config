@@ -301,7 +301,7 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     
     #STEP-Import-DOE-Holder1
     fused26 = Part.Shape()
-    source = os.path.join(source_path, doe_halter_filename + '.step')
+    source = os.path.join(source_path, doe_halter_filename + '.STEP')
     fused26.read(source)
     
     fused26.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 90)
@@ -551,7 +551,7 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
        
     #STEP-Import-Cap
     fused5 = Part.Shape()
-    source = os.path.join(source_path, deckel_filename + '.step')
+    source = os.path.join(source_path, deckel_filename + '.STEP')
     fused5.read(source)   
     
     fused5.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 180)
@@ -574,7 +574,7 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
         
         #STEP-Import-Cap
         PartBossExtrude4 = Part.Shape()
-        source = os.path.join(source_path, clamping_Holder_filename + '.step')
+        source = os.path.join(source_path, clamping_Holder_filename + '.STEP')
         PartBossExtrude4.read(source)   
     
         PartBossExtrude4.rotate(Base.Vector(0, 0, 0),Base.Vector(1, 0, 0), 90)
