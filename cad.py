@@ -5,11 +5,12 @@ from FreeCAD import Base
 import FreeCADGui as Gui
 import Mesh
 import ImportGui
+from PySide import QtGui
 import math
-from math import pi
 import csv
 import shutil
-import os.path
+import os
+import time
 
 
 
@@ -45,6 +46,20 @@ def create_doc():
 def close_document():
     if doc_name in App.listDocuments():
         App.closeDocument(doc_name)
+
+def save_assembly(dest):
+    doc = App.getDocument(doc_name)
+    Gui.export(doc.Objects, dest)
+
+def watch_file(csv_file, output_file):
+    while True:
+        if os.path.exists(csv_file):
+            make_parts(csv_filename=csv_file)
+            save_assembly(output_file)
+            os.remove(csv_file)
+        time.sleep(1)
+        QtGui.QApplication.processEvents()
+
 
 def save_parts(format_, lens, dest):
     parts_list = ['DOE_Holder3', 'LaserHolder1', 'LaserHolder2', 'Mount_Shroud']
