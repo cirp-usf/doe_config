@@ -584,18 +584,21 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     
 
     ###Cap_End################################################################
+
+    ###Clamping_Holders##########################################################
+    #STEP-Import-Cap
+    PartBossExtrude4 = Part.Shape()
+    source = os.path.join(source_path, clamping_Holder_filename + '.STEP')
+    PartBossExtrude4.read(source)   
+    PartBossExtrude4.rotate(Base.Vector(0, 0, 0),Base.Vector(1, 0, 0), 90)
+    PartBossExtrude4.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 90)
+    clampingholderTranslation=(20.5,0,78-DLL)
+    PartBossExtrude4.translate(clampingholderTranslation)
+
     ###Clamping_Holder1##########################################################
     if LensBin==1:
         
-        #STEP-Import-Cap
-        PartBossExtrude4 = Part.Shape()
-        source = os.path.join(source_path, clamping_Holder_filename + '.STEP')
-        PartBossExtrude4.read(source)   
     
-        PartBossExtrude4.rotate(Base.Vector(0, 0, 0),Base.Vector(1, 0, 0), 90)
-        PartBossExtrude4.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 90)
-        clampingholderTranslation=(20.5,0,78-DLL)
-        PartBossExtrude4.translate(clampingholderTranslation)
         
     
         #Display
@@ -604,12 +607,9 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
         clamping_holder1.ViewObject.ShapeColor = (1.0,0.0,0.0)
         
         
-    else:
-        print("no Lens")
     ###Clamping_Holder1_End#######################################################
     ###Clamping_Holder2##########################################################
     
-    if LensBin==1:
         
         PartBossExtrude5 = PartBossExtrude4.copy()
         clampingholderTranslation=(-20.5*2,0,0)
@@ -620,12 +620,8 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
         clamping_holder2.Shape=PartBossExtrude5
         clamping_holder2.ViewObject.ShapeColor = (1.0,0.0,0.0)
     
-    else:
-        print("no Lens")
     ###Clamping_Holder2_End#######################################################
     ###Clamping_Holder3##########################################################
-    if LensBin==1:
-        
         PartBossExtrude6 = PartBossExtrude4.copy()
         clampingholderTranslation=(-20.5,20.5,0)
         PartBossExtrude6.translate(clampingholderTranslation)
@@ -635,12 +631,8 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
         clamping_holder3.Shape=PartBossExtrude6
         clamping_holder3.ViewObject.ShapeColor = (1.0,0.0,0.0)
         
-    else:
-        print("no Lens")
     ###Clamping_Holder3_End#######################################################
     ###Clamping_Holder4##########################################################
-    if LensBin==1:
-        
         PartBossExtrude7 = PartBossExtrude4.copy()
         clampingholderTranslation=(-20.5,-20.5,0)
         PartBossExtrude7.translate(clampingholderTranslation)
