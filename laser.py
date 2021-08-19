@@ -64,6 +64,7 @@ def suggest_laser(InputWave, InputPower, InputWeighting):
     Distance= np.sqrt(diffwave*diffwave+diffpower*diffpower)
     df = np.hstack((df, Distance))
     idx = df[:,7].argsort()[0]
-    return load_modules()[idx]
+    lmodules = load_modules()
+    return lmodules[idx], idx
     
 
