@@ -8,7 +8,7 @@ from stat import S_ISDIR
 
 from .cad import make_parts, close_document, save_parts
 from .laser import suggest_laser
-from .laser import load_modules
+
 
 global switch ; switch = 0
 
@@ -155,6 +155,16 @@ class Ui_MainWindow(object):
         self.label_18.setGeometry(QtCore.QRect(25, 498, 190, 45))                           # label coordinates 
         self.label_18.setObjectName(_fromUtf8("label_18"))                                    # label name                                   # Color text
         self.label_18.setText(_translate("MainWindow", "Working Distance [cm]", None))                 # same resultt with "<b>Hello world</b>"
+        
+        self.label_19 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
+        self.label_19.setGeometry(QtCore.QRect(25, 53, 190, 45))                           # label coordinates 
+        self.label_19.setObjectName(_fromUtf8("label_19"))                                    # label name                                   # Color text
+        self.label_19.setText(_translate("MainWindow", "Weighting Power", None))                 # same resultt with "<b>Hello world</b>"
+        
+        self.label_20 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
+        self.label_20.setGeometry(QtCore.QRect(464, 53, 190, 45))                           # label coordinates 
+        self.label_20.setObjectName(_fromUtf8("label_20"))                                    # label name                                   # Color text
+        self.label_20.setText(_translate("MainWindow", "Weighting Wavelength", None))                 # same resultt with "<b>Hello world</b>"
 
         #        section horizontalSlider 
         self.horizontalSlider1 = QtGui.QSlider(self.widget)                                  # create horizontalSlider
@@ -263,6 +273,16 @@ class Ui_MainWindow(object):
         self.horizontalSlider12.setInvertedAppearance(False)                                  # displacement rigth to left or left to rigth value "True" or "False"
         self.horizontalSlider12.setObjectName(_fromUtf8("horizontalSlider12"))                  # object Name
         self.horizontalSlider12.valueChanged.connect(self.on_horizontal_slider12)               # connect on "def on_horizontal_slider:" for execute action
+        
+        #        section horizontalSlider 
+        self.horizontalSlider13 = QtGui.QSlider(self.widget)                                  # create horizontalSlider
+        self.horizontalSlider13.setRange(0, 100)                                                 #value*10 to get to get one decimal digit
+        self.horizontalSlider13.setGeometry(QtCore.QRect(205, 70, 230, 18))                     # coordinates position
+        self.horizontalSlider13.setOrientation(QtCore.Qt.Horizontal)                          # orientation Horizontal
+        self.horizontalSlider13.setInvertedAppearance(False)                                  # displacement rigth to left or left to rigth value "True" or "False"
+        self.horizontalSlider13.setObjectName(_fromUtf8("horizontalSlider13"))                  # object Name
+        self.horizontalSlider13.valueChanged.connect(self.on_horizontal_slider13)               # connect on "def on_horizontal_slider:" for execute action
+        self.horizontalSlider13.setValue(50)
 
 #        section pushButton 1
         self.pushButton_1 = QtGui.QPushButton(self.widget)                                  # create object PushButton_1
@@ -483,6 +503,8 @@ class Ui_MainWindow(object):
         self.label_16.setFont(font)
         self.label_17.setFont(font)
         self.label_18.setFont(font)
+        self.label_19.setFont(font)
+        self.label_20.setFont(font)
         self.cb1.setFont(font)    
         self.cb2.setFont(font)  
         self.cb3.setFont(font)  
@@ -704,6 +726,15 @@ class Ui_MainWindow(object):
         print( val_WorkingDistance0)
         return (float(val_WorkingDistance))
         #
+        
+    def affectation_Weighting (self,val_Weighting0):                                                        # connection affectation_X
+        val_Weighting = float(val_Weighting0)                                                              # extract the value and transform it in float
+        #
+        #here your code
+        #
+        print( val_Weighting0)
+        return (float(val_Weighting))
+        #
 
     def selectionchange1 (self):
         pass
@@ -832,6 +863,15 @@ class Ui_MainWindow(object):
         #self.Darstellung(val_WorkingDistance)
 
         print( "on_horizontal_slider12" )                                                       # displayed on View repport  
+        
+    def on_horizontal_slider13(self, val_Weighting):                                                  # connection on_horizontal_slider
+        #
+
+        #self.lineEdit_13.setText(str(val_WorkingDistance/10))
+        self.affectation_Weighting(val_Weighting)
+        #self.Darstellung(val_WorkingDistance)
+
+        print( "on_horizontal_slider13" )                                                       # displayed on View repport  
 
 
 
@@ -1214,9 +1254,11 @@ class Ui_MainWindow(object):
     def on_pushButton_5_clicked(self):    # make Suggestion for Laser                                     # connection on_pushButton_2_clicked
     
         Wavelength = float(self.lineEdit_9.text())
-        Power = float(self.lineEdit_10.text())    
+        Power = float(self.lineEdit_10.text())
+        #Weighting=float(self.horizontalSlider13.getValue())
+        Weighting=self.horizontalSlider13.value()/100
         
-        lmodule = suggest_laser(Wavelength,Power,0.5)
+        lmodule = suggest_laser(Wavelength,Power,Weighting)
         Name = str(lmodule[0][0])
         wavelength = str(lmodule[0][1])
         power = str(lmodule[0][2]) 
