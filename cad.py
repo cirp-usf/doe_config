@@ -662,6 +662,49 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
         clamping_holder4 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder4")
         clamping_holder4.Shape=PartBossExtrude7
         clamping_holder4.ViewObject.ShapeColor = (1.0,0.0,0.0)
+    ###Clamping_Holder9##########################################################
+        PartBossExtrude12 = PartBossExtrude4.copy()
+        clampingholderTranslation=(0,0,Thickness+5)
+        PartBossExtrude12.translate(clampingholderTranslation)
+        
+        #Display
+        clamping_holder9 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder9")
+        clamping_holder9.Shape=PartBossExtrude12
+        clamping_holder9.ViewObject.ShapeColor = (1.0,0.0,0.0)    
+    ###Clamping_Holder9_End#######################################################    
+    ###Clamping_Holder10##########################################################
+        PartBossExtrude13 = PartBossExtrude5.copy()
+        clampingholderTranslation=(0,0,Thickness+5)
+        PartBossExtrude13.translate(clampingholderTranslation)
+        
+        #Display
+        clamping_holder10 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder10")
+        clamping_holder10.Shape=PartBossExtrude13
+        clamping_holder10.ViewObject.ShapeColor = (1.0,0.0,0.0)
+    ###Clamping_Holder10_End#######################################################     
+    ###Clamping_Holder11##########################################################
+        PartBossExtrude14 = PartBossExtrude6.copy()
+        clampingholderTranslation=(0,0,Thickness+5)
+        PartBossExtrude14.translate(clampingholderTranslation)
+        
+        #Display
+        clamping_holder11 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder11")
+        clamping_holder11.Shape=PartBossExtrude14
+        clamping_holder11.ViewObject.ShapeColor = (1.0,0.0,0.0)
+    ###Clamping_Holder11_End#######################################################  
+    ###Clamping_Holder12##########################################################
+        PartBossExtrude15 = PartBossExtrude7.copy()
+        clampingholderTranslation=(0,0,Thickness+5)
+        PartBossExtrude15.translate(clampingholderTranslation)
+        
+        #Display
+        clamping_holder12 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder11")
+        clamping_holder12.Shape=PartBossExtrude15
+        clamping_holder12.ViewObject.ShapeColor = (1.0,0.0,0.0)
+    ###Clamping_Holder12_End#######################################################         
+        
+        
+        
     else:
         print("no Lens")
     ###Clamping_Holder4_End#######################################################
