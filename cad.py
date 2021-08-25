@@ -3,7 +3,7 @@ import Part
 import FreeCAD as App
 from FreeCAD import Base
 import FreeCADGui as Gui
-import Mesh
+import Mesh, MeshPart
 import ImportGui
 from PySide import QtGui
 import math
@@ -15,6 +15,7 @@ import time
 
 
 from . import __path__, doc_name
+from .bom import make_BOM
 source_path = os.path.join(__path__[0], 'step')
 source_path = os.path.normpath(source_path)
 
@@ -23,10 +24,12 @@ deckel_filename = 'Deckel___V03'
 mount_filename = 'Mount'
 clamping_Holder_filename = 'FT_Klemmbuchse5_37679_dummie___V02'
 rod_filename = 'Rod_'
-
+bom_filename = 'bom.csv'
 
 RotCenter0 = Base.Vector(0, 0, 0)
 RotAxisZ = Base.Vector(0, 0, 1)
+
+
 
 #Function to clear Window
 def clearAll():
@@ -51,15 +54,33 @@ def save_assembly(dest):
     doc = App.getDocument(doc_name)
     Gui.export(doc.Objects, dest)
 
-def watch_file(csv_file, output_file):
+def save_parts_web(base_dir):
+    doc = App.getDocument(doc_name)
+    for partname in ['DOE_Holder1', 'DOE_Holder3', 'LaserHolder1', 'LensHolder', 'cap', 'Mount_Shroud']:
+        obj = doc.getObject(partname)
+        if obj is not None:
+            m = MeshPart.meshFromShape(Shape=obj.Shape, LinearDeflection=0.1, AngularDeflection=0.2)
+            file_name = os.path.join(base_dir, partname) + '.x3d'
+            m.write(file_name)
+
+def watch_file(base_dir, csv_file, output_file):
+    csv_f = os.path.join(base_dir, csv_file)
+    out_f = os.path.join(base_dir, output_file)
+    bom_f = os.path.join(base_dir, bom_filename)
     while True:
-        if os.path.exists(csv_file):
-            make_parts(csv_filename=csv_file)
-            save_assembly(output_file)
-            os.remove(csv_file)
+        if os.path.exists(csv_f):
+            make_parts(csv_filename=csv_f)
+            make_BOM(csv_f, bom_f)
+            save_parts_web(base_dir)
+            save_assembly(out_f)
+            os.remove(csv_f)
         time.sleep(1)
         QtGui.QApplication.processEvents()
 
+    
+    
+    
+        
 
 def save_parts(format_, lens, dest):
     parts_list = ['DOE_Holder3', 'LaserHolder1', 'LaserHolder2', 'Mount_Shroud']
