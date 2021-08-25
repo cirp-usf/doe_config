@@ -7,6 +7,8 @@ import os
 from stat import S_ISDIR
 
 from .cad import make_parts, close_document, save_parts
+from .laser import suggest_laser
+from .laser import load_modules
 
 global switch ; switch = 0
 
@@ -1210,98 +1212,20 @@ class Ui_MainWindow(object):
             make_parts(params=self.params)
 
     def on_pushButton_5_clicked(self):    # make Suggestion for Laser                                     # connection on_pushButton_2_clicked
-        #
+    
         Wavelength = float(self.lineEdit_9.text())
-        Power = float(self.lineEdit_10.text())
-        print(Wavelength)
-        print(Power)
-        print("Searching...")
-        if Wavelength <= 462.5 and Power <=3:
-            print("Laser 1")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: Picotronic DD405-1-3 \nWavelength: 405 nm\nPower: 1 mW\nDiameter: 11 mm\nLenght: 43.3 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("11.0")
-            self.horizontalSlider5.setValue(110)                                                    
-            self.lineEdit_7.setText("43.3") 
-            self.horizontalSlider6.setValue(433)
-        elif Wavelength <=468.5 and Power <=8.5 and Power >3:
-            print("Laser 2")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: CW405-05 \nWavelength: 405 nm\nPower: 5 mW\nDiameter: 12 mm\nLenght: 22 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("12.0")
-            self.horizontalSlider5.setValue(120)                                                    
-            self.lineEdit_7.setText("22.0") 
-            self.horizontalSlider6.setValue(220)
-        elif Wavelength <=468.5 and Power <=16 and Power >8.5:
-            print("Laser 3")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: RLDE405-12-6 \nWavelength: 405 nm\nPower: 12 mW\nDiameter: 22 mm\nLenght: 65 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("22.0")
-            self.horizontalSlider5.setValue(220)                                                    
-            self.lineEdit_7.setText("65.0") 
-            self.horizontalSlider6.setValue(650)
-        elif Wavelength <=468.5 and Power >16:
-            print("Laser 4")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: RLDE405M-20-5 \nWavelength: 405 nm\nPower: 20 mW\nDiameter: 16 mm\nLenght: 50 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("16.0")
-            self.horizontalSlider5.setValue(160)                                                    
-            self.lineEdit_7.setText("50.0") 
-            self.horizontalSlider6.setValue(500)
-        elif Wavelength >462.5 and Wavelength <= 585 and Power <=0.7:
-            print("Laser 5")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: LFD520-0.4-3 \nWavelength: 520 nm\nPower: 0.4 mW\nDiameter: 19 mm\nLenght: 86 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("19.0")
-            self.horizontalSlider5.setValue(190)                                                    
-            self.lineEdit_7.setText("86.0") 
-            self.horizontalSlider6.setValue(860)
-        elif Wavelength >468.5 and Wavelength<= 591 and Power >0.7 and Power<=3:
-            print("Laser 6")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: LFD532-1-3(16x90)-AP-NT \nWavelength: 532 nm\nPower: 1 mW\nDiameter: 16 mm\nLenght: 90 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("16.0")
-            self.horizontalSlider5.setValue(160)                                                    
-            self.lineEdit_7.setText("90.0") 
-            self.horizontalSlider6.setValue(900)
-        elif Wavelength >468.5 and Wavelength<= 591 and Power >3 and Power<=12.5:
-            print("Laser 7")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: LFD532-5-3 \nWavelength: 532 nm\nPower: 5 mW\nDiameter: 12 mm\nLenght: 60 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("12.0")
-            self.horizontalSlider5.setValue(120)                                                    
-            self.lineEdit_7.setText("60.0") 
-            self.horizontalSlider6.setValue(600)
-        elif Wavelength >468.5 and Wavelength<= 591 and Power >12.5:
-            print("Laser 8")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: CW532H-050 \nWavelength: 532 nm\nPower: 20 mW\nDiameter: 26 mm\nLenght: 100 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("26.0")
-            self.horizontalSlider5.setValue(260)                                                    
-            self.lineEdit_7.setText("100.0") 
-            self.horizontalSlider6.setValue(1000)
-        elif Wavelength >585 and Power <=0.7:
-            print("Laser 9")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: LFD650-0.4-4.5 \nWavelength: 650 nm\nPower: 0.4 mW\nDiameter: 15 mm\nLenght: 67 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("15.0")
-            self.horizontalSlider5.setValue(150)                                                    
-            self.lineEdit_7.setText("67.0") 
-            self.horizontalSlider6.setValue(670)
-        elif Wavelength >591 and Power >0.7 and Power <=3:
-            print("Laser 10")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: LFD635-1-3 \nWavelength: 650 nm\nPower: 1 mW\nDiameter: 11.9 mm\nLenght: 31.5 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("11.9")
-            self.horizontalSlider5.setValue(119)                                                    
-            self.lineEdit_7.setText("31.5") 
-            self.horizontalSlider6.setValue(315)
-        elif Wavelength >591 and Power >3 and Power <=14.5:
-            print("Laser 11")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: LFD635-5-3 \nWavelength: 650 nm\nPower: 5 mW\nDiameter: 11.9 mm\nLenght: 31.5 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("11.9")
-            self.horizontalSlider5.setValue(119)                                                    
-            self.lineEdit_7.setText("31.5") 
-            self.horizontalSlider6.setValue(315)
-        elif Wavelength >591 and Power >14.5:
-            print("Laser 12")
-            self.label_00.setText(_translate("MainWindow","Suggested Laser: RLDH650-24-3 \nWavelength: 650 nm\nPower: 24 mW\nDiameter: 14 mm\nLenght: 45 mm", None))     # display in the label_00
-            self.lineEdit_6.setText("14.0")
-            self.horizontalSlider5.setValue(140)                                                    
-            self.lineEdit_7.setText("45.0") 
-            self.horizontalSlider6.setValue(450)
-        else:
-            print("no compatible laser was found")
+        Power = float(self.lineEdit_10.text())    
+        
+        lmodule = suggest_laser(Wavelength,Power,0.5)
+        Name = str(lmodule[0][0])
+        wavelength = str(lmodule[0][1])
+        power = str(lmodule[0][2]) 
+        diameter= str(lmodule[0][3])
+        length= str(lmodule[0][4])
+        #print(einzeldaten)
+        text=("Suggested Laser: " + Name + "\nWavelength: " + wavelength + " nm\nPower: " + power + " mW\nDiameter: " + diameter + " mm\nLenght: " + length + " mm")
+        print(text)
+        self.label_00.setText(_translate("MainWindow",str(text), None))     # display in the label_00
 
 
 
