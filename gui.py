@@ -70,24 +70,24 @@ class Ui_MainWindow(object):
         self.label_1.setText(_translate("MainWindow", "DOE Hole Width [mm]", None))                 # same resultt with "<b>Hello world</b>"
  
         self.label_2 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
-        self.label_2.setGeometry(QtCore.QRect(25, 618, 150, 25))                           # label coordinates 
+        self.label_2.setGeometry(QtCore.QRect(25, 643, 150, 25))                           # label coordinates 
         self.label_2.setObjectName(_fromUtf8("label_2"))                                    # label name                                   # Color text
         self.label_2.setText(_translate("MainWindow", "comp. Location", None))                 # same resultt with "<b>Hello world</b>"
         
         self.label_3 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
-        self.label_3.setGeometry(QtCore.QRect(205, 640, 400, 25))                           # label coordinates 
+        self.label_3.setGeometry(QtCore.QRect(205, 665, 400, 25))                           # label coordinates 
         self.label_3.setObjectName(_fromUtf8("label_3"))                                    # label name                                   # Color text
         self.label_3.setFont(font)
         self.label_3.setText(_translate("MainWindow", "e.g.: C:/Users/ITO/Desktop/Testdatei", None))                 # same resultt with "<b>Hello world</b>"
 
         self.label_4 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
-        self.label_4.setGeometry(QtCore.QRect(465, 640, 120, 25))                           # label coordinates 
+        self.label_4.setGeometry(QtCore.QRect(465, 665, 120, 25))                           # label coordinates 
         self.label_4.setObjectName(_fromUtf8("label_4"))                                    # label name                                   # Color text
         self.label_4.setFont(font)
         self.label_4.setText(_translate("MainWindow", "file format", None))                 # same resultt with "<b>Hello world</b>"
  
         self.label_5 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
-        self.label_5.setGeometry(QtCore.QRect(25, 522, 160, 50))                           # label coordinates 
+        self.label_5.setGeometry(QtCore.QRect(25, 547, 160, 50))                           # label coordinates 
         self.label_5.setObjectName(_fromUtf8("label_5"))                                    # label name                                   # Color text
         self.label_5.setText(_translate("MainWindow", "integrated Lens", None))                 # same resultt with "<b>Hello world</b>"
 
@@ -112,7 +112,7 @@ class Ui_MainWindow(object):
         self.label_9.setText(_translate("MainWindow", "Laser Diameter [mm]", None))                 # same resultt with "<b>Hello world</b>"
 
         self.label_10 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
-        self.label_10.setGeometry(QtCore.QRect(25, 548, 190, 45))                           # label coordinates 
+        self.label_10.setGeometry(QtCore.QRect(25, 573, 190, 45))                           # label coordinates 
         self.label_10.setObjectName(_fromUtf8("label_10"))                                    # label name                                   # Color text
         self.label_10.setText(_translate("MainWindow", "Rod Length [mm]", None))                 # same resultt with "<b>Hello world</b>"
 
@@ -122,7 +122,7 @@ class Ui_MainWindow(object):
         self.label_11.setText(_translate("MainWindow", "Laser Length [mm]", None))                 # same resultt with "<b>Hello world</b>"
 
         self.label_12 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
-        self.label_12.setGeometry(QtCore.QRect(25, 423, 190, 45))                           # label coordinates 
+        self.label_12.setGeometry(QtCore.QRect(25, 448, 190, 45))                           # label coordinates 
         self.label_12.setObjectName(_fromUtf8("label_12"))                                    # label name                                   # Color text
         self.label_12.setText(_translate("MainWindow", "Dist. Laser-Lens [mm]", None))                 # same resultt with "<b>Hello world</b>"
 
@@ -137,22 +137,22 @@ class Ui_MainWindow(object):
         self.label_14.setText(_translate("MainWindow", "Desired Laser Power [mW]", None))                 # same resultt with "<b>Hello world</b>"
 
         self.label_15 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
-        self.label_15.setGeometry(QtCore.QRect(25, 573, 190, 45))                           # label coordinates 
+        self.label_15.setGeometry(QtCore.QRect(25, 598, 190, 45))                           # label coordinates 
         self.label_15.setObjectName(_fromUtf8("label_15"))                                    # label name                                   # Color text
         self.label_15.setText(_translate("MainWindow", "Mounting element", None))                 # same resultt with "<b>Hello world</b>"
 
         self.label_16 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
-        self.label_16.setGeometry(QtCore.QRect(25, 448, 190, 45))                           # label coordinates 
+        self.label_16.setGeometry(QtCore.QRect(25, 473, 190, 45))                           # label coordinates 
         self.label_16.setObjectName(_fromUtf8("label_16"))                                    # label name                                   # Color text
         self.label_16.setText(_translate("MainWindow", "Projection Height/Width [mm]", None))                 # same resultt with "<b>Hello world</b>"
 
         self.label_17 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
-        self.label_17.setGeometry(QtCore.QRect(25, 473, 190, 45))                           # label coordinates 
+        self.label_17.setGeometry(QtCore.QRect(25, 498, 190, 45))                           # label coordinates 
         self.label_17.setObjectName(_fromUtf8("label_17"))                                    # label name                                   # Color text
         self.label_17.setText(_translate("MainWindow", "Projection Depth [mm]", None))                 # same resultt with "<b>Hello world</b>"
 
         self.label_18 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
-        self.label_18.setGeometry(QtCore.QRect(25, 498, 190, 45))                           # label coordinates 
+        self.label_18.setGeometry(QtCore.QRect(25, 522, 190, 45))                           # label coordinates 
         self.label_18.setObjectName(_fromUtf8("label_18"))                                    # label name                                   # Color text
         self.label_18.setText(_translate("MainWindow", "Working Distance [cm]", None))                 # same resultt with "<b>Hello world</b>"
         
@@ -165,6 +165,11 @@ class Ui_MainWindow(object):
         self.label_20.setGeometry(QtCore.QRect(464, 53, 190, 45))                           # label coordinates 
         self.label_20.setObjectName(_fromUtf8("label_20"))                                    # label name                                   # Color text
         self.label_20.setText(_translate("MainWindow", "Weighting Wavelength", None))                 # same resultt with "<b>Hello world</b>"
+        
+        self.label_21 = QtGui.QLabel(self.widget)                                            # labels displayed on widget
+        self.label_21.setGeometry(QtCore.QRect(25, 423, 190, 45))                           # label coordinates 
+        self.label_21.setObjectName(_fromUtf8("label_21"))                                    # label name                                   # Color text
+        self.label_21.setText(_translate("MainWindow", "Dist. DOE-Laser [mm]", None))                 # same resultt with "<b>Hello world</b>"
 
         #        section horizontalSlider 
         self.horizontalSlider1 = QtGui.QSlider(self.widget)                                  # create horizontalSlider
@@ -223,7 +228,7 @@ class Ui_MainWindow(object):
         #        section horizontalSlider 
         self.horizontalSlider7 = QtGui.QSlider(self.widget)                                  # create horizontalSlider
         self.horizontalSlider7.setRange(500, 1000)                                                 #value*10 to get to get one decimal digit
-        self.horizontalSlider7.setGeometry(QtCore.QRect(205, 438, 230, 18))                     # coordinates position
+        self.horizontalSlider7.setGeometry(QtCore.QRect(205, 463, 230, 18))                     # coordinates position
         self.horizontalSlider7.setOrientation(QtCore.Qt.Horizontal)                          # orientation Horizontal
         self.horizontalSlider7.setInvertedAppearance(False)                                  # displacement rigth to left or left to rigth value "True" or "False"
         self.horizontalSlider7.setObjectName(_fromUtf8("horizontalSlider7"))                  # object Name
@@ -250,7 +255,7 @@ class Ui_MainWindow(object):
         #        section horizontalSlider 
         self.horizontalSlider10 = QtGui.QSlider(self.widget)                                  # create horizontalSlider
         self.horizontalSlider10.setRange(100, 20000)                                                 #value*10 to get to get one decimal digit
-        self.horizontalSlider10.setGeometry(QtCore.QRect(205,463, 230, 18))                     # coordinates position
+        self.horizontalSlider10.setGeometry(QtCore.QRect(205,488, 230, 18))                     # coordinates position
         self.horizontalSlider10.setOrientation(QtCore.Qt.Horizontal)                          # orientation Horizontal
         self.horizontalSlider10.setInvertedAppearance(False)                                  # displacement rigth to left or left to rigth value "True" or "False"
         self.horizontalSlider10.setObjectName(_fromUtf8("horizontalSlider10"))                  # object Name
@@ -259,7 +264,7 @@ class Ui_MainWindow(object):
         #        section horizontalSlider 
         self.horizontalSlider11 = QtGui.QSlider(self.widget)                                  # create horizontalSlider
         self.horizontalSlider11.setRange(10, 20000)                                                 #value*10 to get to get one decimal digit
-        self.horizontalSlider11.setGeometry(QtCore.QRect(205, 488, 230, 18))                     # coordinates position
+        self.horizontalSlider11.setGeometry(QtCore.QRect(205, 513, 230, 18))                     # coordinates position
         self.horizontalSlider11.setOrientation(QtCore.Qt.Horizontal)                          # orientation Horizontal
         self.horizontalSlider11.setInvertedAppearance(False)                                  # displacement rigth to left or left to rigth value "True" or "False"
         self.horizontalSlider11.setObjectName(_fromUtf8("horizontalSlider11"))                  # object Name
@@ -268,7 +273,7 @@ class Ui_MainWindow(object):
         #        section horizontalSlider 
         self.horizontalSlider12 = QtGui.QSlider(self.widget)                                  # create horizontalSlider
         self.horizontalSlider12.setRange(100, 10000)                                                 #value*10 to get to get one decimal digit
-        self.horizontalSlider12.setGeometry(QtCore.QRect(205, 513, 230, 18))                     # coordinates position
+        self.horizontalSlider12.setGeometry(QtCore.QRect(205, 538, 230, 18))                     # coordinates position
         self.horizontalSlider12.setOrientation(QtCore.Qt.Horizontal)                          # orientation Horizontal
         self.horizontalSlider12.setInvertedAppearance(False)                                  # displacement rigth to left or left to rigth value "True" or "False"
         self.horizontalSlider12.setObjectName(_fromUtf8("horizontalSlider12"))                  # object Name
@@ -283,6 +288,15 @@ class Ui_MainWindow(object):
         self.horizontalSlider13.setObjectName(_fromUtf8("horizontalSlider13"))                  # object Name
         self.horizontalSlider13.valueChanged.connect(self.on_horizontal_slider13)               # connect on "def on_horizontal_slider:" for execute action
         self.horizontalSlider13.setValue(50)
+        
+        #        section horizontalSlider 
+        self.horizontalSlider14 = QtGui.QSlider(self.widget)                                  # create horizontalSlider
+        self.horizontalSlider14.setRange(100, 1000)                                                 #value*10 to get to get one decimal digit
+        self.horizontalSlider14.setGeometry(QtCore.QRect(205,438, 230, 18))                     # coordinates position
+        self.horizontalSlider14.setOrientation(QtCore.Qt.Horizontal)                          # orientation Horizontal
+        self.horizontalSlider14.setInvertedAppearance(False)                                  # displacement rigth to left or left to rigth value "True" or "False"
+        self.horizontalSlider14.setObjectName(_fromUtf8("horizontalSlider14"))                  # object Name
+        self.horizontalSlider14.valueChanged.connect(self.on_horizontal_slider14)               # connect on "def on_horizontal_slider:" for execute action
 
 #        section pushButton 1
         self.pushButton_1 = QtGui.QPushButton(self.widget)                                  # create object PushButton_1
@@ -316,14 +330,14 @@ class Ui_MainWindow(object):
 
 #        section comboBox1
         self.cb1 = QtGui.QComboBox(self.widget)
-        self.cb1.setGeometry(QtCore.QRect(465, 536, 120, 25))
+        self.cb1.setGeometry(QtCore.QRect(465, 564, 120, 25))
         self.cb1.addItem("yes")
         self.cb1.addItem("no")
         self.cb1.currentIndexChanged.connect(self.selectionchange1)
 
 #        section comboBox2
         self.cb2 = QtGui.QComboBox(self.widget)
-        self.cb2.setGeometry(QtCore.QRect(465, 619, 120, 23))
+        self.cb2.setGeometry(QtCore.QRect(465, 645, 120, 23))
         self.cb2.addItem(".stl")
         self.cb2.addItem(".step")
         self.cb2.addItems([".FreeCAD"])
@@ -331,7 +345,7 @@ class Ui_MainWindow(object):
 
 #        section comboBox3
         self.cb3 = QtGui.QComboBox(self.widget)
-        self.cb3.setGeometry(QtCore.QRect(465, 564, 120, 23))
+        self.cb3.setGeometry(QtCore.QRect(465, 590, 120, 23))
         self.cb3.addItem("200")
         self.cb3.addItem("125")
         self.cb3.addItems(["150","170","235"])
@@ -339,7 +353,7 @@ class Ui_MainWindow(object):
 
 #        section comboBox4
         self.cb4 = QtGui.QComboBox(self.widget)
-        self.cb4.setGeometry(QtCore.QRect(465, 590, 120, 23))
+        self.cb4.setGeometry(QtCore.QRect(465, 614, 120, 23))
         self.cb4.addItem("2x, 180°")
         self.cb4.addItem("1x")
         self.cb4.addItems(["2x, 90°","3x","4x"])
@@ -358,7 +372,7 @@ class Ui_MainWindow(object):
 
 #        section lineEdit 2
         self.lineEdit_2 = QtGui.QLineEdit(self.widget)                                      # create object lineEdit_2
-        self.lineEdit_2.setGeometry(QtCore.QRect(205, 620, 250, 22))                          # coordinates position
+        self.lineEdit_2.setGeometry(QtCore.QRect(205, 645, 250, 22))                          # coordinates position
         self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))                              # name of object
         self.lineEdit_2.setText("")                                                        # text by default
         self.lineEdit_2.returnPressed.connect(self.on_lineEdit_2_Pressed)                  # connect on def "on_lineEdit_2_Pressed" for execute actionn   # for validate the data with press on return touch
@@ -412,7 +426,7 @@ class Ui_MainWindow(object):
 
 #        section lineEdit 8
         self.lineEdit_8 = QtGui.QLineEdit(self.widget)                                      # create object lineEdit_2
-        self.lineEdit_8.setGeometry(QtCore.QRect(465, 436, 120, 22))                          # coordinates position
+        self.lineEdit_8.setGeometry(QtCore.QRect(465, 461, 120, 22))                          # coordinates position
         self.lineEdit_8.setObjectName(_fromUtf8("lineEdit_8"))                              # name of object
         self.lineEdit_8.setText("50.0")                                                        # text by default
         self.lineEdit_8.returnPressed.connect(self.on_lineEdit_8_Pressed)                  # connect on def "on_lineEdit_2_Pressed" for execute actionn   # for validate the data with press on return touch
@@ -439,7 +453,7 @@ class Ui_MainWindow(object):
 
 #        section lineEdit 11
         self.lineEdit_11 = QtGui.QLineEdit(self.widget)                                      # create object lineEdit_2
-        self.lineEdit_11.setGeometry(QtCore.QRect(465, 461, 120, 22))                          # coordinates position
+        self.lineEdit_11.setGeometry(QtCore.QRect(465, 486, 120, 22))                          # coordinates position
         self.lineEdit_11.setObjectName(_fromUtf8("lineEdit_11"))                              # name of object
         self.lineEdit_11.setText("10.0")                                                        # text by default
         self.lineEdit_11.returnPressed.connect(self.on_lineEdit_11_Pressed)                  # connect on def "on_lineEdit_2_Pressed" for execute actionn   # for validate the data with press on return touch
@@ -448,7 +462,7 @@ class Ui_MainWindow(object):
 
 #        section lineEdit 12
         self.lineEdit_12 = QtGui.QLineEdit(self.widget)                                      # create object lineEdit_2
-        self.lineEdit_12.setGeometry(QtCore.QRect(465, 486, 120, 22))                          # coordinates position
+        self.lineEdit_12.setGeometry(QtCore.QRect(465, 511, 120, 22))                          # coordinates position
         self.lineEdit_12.setObjectName(_fromUtf8("lineEdit_12"))                              # name of object
         self.lineEdit_12.setText("1.0")                                                        # text by default
         self.lineEdit_12.returnPressed.connect(self.on_lineEdit_12_Pressed)                  # connect on def "on_lineEdit_2_Pressed" for execute actionn   # for validate the data with press on return touch
@@ -457,14 +471,21 @@ class Ui_MainWindow(object):
 
 #        section lineEdit 13
         self.lineEdit_13 = QtGui.QLineEdit(self.widget)                                      # create object lineEdit_2
-        self.lineEdit_13.setGeometry(QtCore.QRect(465, 511, 120, 22))                          # coordinates position
+        self.lineEdit_13.setGeometry(QtCore.QRect(465, 536, 120, 22))                          # coordinates position
         self.lineEdit_13.setObjectName(_fromUtf8("lineEdit_13"))                              # name of object
         self.lineEdit_13.setText("10.0")                                                        # text by default
         self.lineEdit_13.returnPressed.connect(self.on_lineEdit_13_Pressed)                  # connect on def "on_lineEdit_2_Pressed" for execute actionn   # for validate the data with press on return touch
         #self.lineEdit_13.textChanged.connect(self.on_lineEdit_13_Pressed)                     # connect on def "on_lineEdit_2_Pressed" for execute actionn   # with tips key char by char
                                                                                             # a tooltip can be set to all objects
 
-
+#        section lineEdit 14
+        self.lineEdit_14 = QtGui.QLineEdit(self.widget)                                      # create object lineEdit_2
+        self.lineEdit_14.setGeometry(QtCore.QRect(465, 436, 120, 22))                          # coordinates position
+        self.lineEdit_14.setObjectName(_fromUtf8("lineEdit_14"))                              # name of object
+        self.lineEdit_14.setText("10.0")                                                        # text by default
+        self.lineEdit_14.returnPressed.connect(self.on_lineEdit_14_Pressed)                  # connect on def "on_lineEdit_2_Pressed" for execute actionn   # for validate the data with press on return touch
+        #self.lineEdit_14.textChanged.connect(self.on_lineEdit_14_Pressed)                     # connect on def "on_lineEdit_2_Pressed" for execute actionn   # with tips key char by char
+                                                                                            # a tooltip can be set to all objects
 
 
 
@@ -505,6 +526,7 @@ class Ui_MainWindow(object):
         self.label_18.setFont(font)
         self.label_19.setFont(font)
         self.label_20.setFont(font)
+        self.label_21.setFont(font)
         self.cb1.setFont(font)    
         self.cb2.setFont(font)  
         self.cb3.setFont(font)  
@@ -735,6 +757,15 @@ class Ui_MainWindow(object):
         print( val_Weighting0)
         return (float(val_Weighting))
         #
+        
+    def affectation_DistLaserDOE (self,val_DistLaserDOE0):                                                        # connection affectation_X
+        val_DistLaserDOE = float(val_DistLaserDOE0)                                                              # extract the value and transform it in float
+        #
+        #here your code
+        #
+        print( val_DistLaserDOE0)
+        return (float(val_DistLaserDOE))
+        #
 
     def selectionchange1 (self):
         pass
@@ -872,6 +903,15 @@ class Ui_MainWindow(object):
         #self.Darstellung(val_WorkingDistance)
 
         print( "on_horizontal_slider13" )                                                       # displayed on View repport  
+        
+    def on_horizontal_slider14(self, val_DistLaserDOE):                                                  # connection on_horizontal_slider
+        #
+
+        self.lineEdit_14.setText(str(val_DistLaserDOE/10))
+        self.affectation_DistLaserDOE(val_DistLaserDOE)
+        #self.Darstellung(val_WorkingDistance)
+
+        print( "on_horizontal_slider14" )  
 
 
 
@@ -1085,6 +1125,23 @@ class Ui_MainWindow(object):
             self.horizontalSlider12.setValue(0)                                          # affect the value "0" on horizontalSlider and modify this
             val_WorkingDistance = "0"
         print( val_WorkingDistance)
+        #
+        
+    def on_lineEdit_14_Pressed(self):                                                        # connection on_lineEdit_1_Pressed
+        val_DistLaserDOE = float(self.lineEdit_14.text())
+        val_DistLaserDOE = round(val_DistLaserDOE, 1)
+        self.lineEdit_14.setText(str(val_DistLaserDOE))
+        #print (val_WorkingDistance)                                                      # extract the string in the lineEdit
+        #
+        #here your code
+        #
+        self.affectation_DistLaserDOE(float(val_DistLaserDOE))
+        try:
+            self.horizontalSlider14.setValue(val_DistLaserDOE*10)                                      # affect the value "val_X" on horizontalSlider and modify this
+        except Exception:                                                                   # if error
+            self.horizontalSlider14.setValue(0)                                          # affect the value "0" on horizontalSlider and modify this
+            val_DistLaserDOE = "0"
+        print( val_DistLaserDOE)
         #
 
 
