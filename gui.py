@@ -291,7 +291,7 @@ class Ui_MainWindow(object):
         
         #        section horizontalSlider 
         self.horizontalSlider14 = QtGui.QSlider(self.widget)                                  # create horizontalSlider
-        self.horizontalSlider14.setRange(100, 1000)                                                 #value*10 to get to get one decimal digit
+        self.horizontalSlider14.setRange(500, 1000)                                                 #value*10 to get to get one decimal digit
         self.horizontalSlider14.setGeometry(QtCore.QRect(205,438, 230, 18))                     # coordinates position
         self.horizontalSlider14.setOrientation(QtCore.Qt.Horizontal)                          # orientation Horizontal
         self.horizontalSlider14.setInvertedAppearance(False)                                  # displacement rigth to left or left to rigth value "True" or "False"
@@ -346,9 +346,9 @@ class Ui_MainWindow(object):
 #        section comboBox3
         self.cb3 = QtGui.QComboBox(self.widget)
         self.cb3.setGeometry(QtCore.QRect(465, 590, 120, 23))
-        self.cb3.addItem("200")
+        self.cb3.addItem("260")
         self.cb3.addItem("125")
-        self.cb3.addItems(["150","170","235"])
+        self.cb3.addItems(["150","170","235", "200", "110","90"])
         self.cb3.currentIndexChanged.connect(self.selectionchange3)
 
 #        section comboBox4
@@ -482,7 +482,7 @@ class Ui_MainWindow(object):
         self.lineEdit_14 = QtGui.QLineEdit(self.widget)                                      # create object lineEdit_2
         self.lineEdit_14.setGeometry(QtCore.QRect(465, 436, 120, 22))                          # coordinates position
         self.lineEdit_14.setObjectName(_fromUtf8("lineEdit_14"))                              # name of object
-        self.lineEdit_14.setText("10.0")                                                        # text by default
+        self.lineEdit_14.setText("50.0")                                                        # text by default
         self.lineEdit_14.returnPressed.connect(self.on_lineEdit_14_Pressed)                  # connect on def "on_lineEdit_2_Pressed" for execute actionn   # for validate the data with press on return touch
         #self.lineEdit_14.textChanged.connect(self.on_lineEdit_14_Pressed)                     # connect on def "on_lineEdit_2_Pressed" for execute actionn   # with tips key char by char
                                                                                             # a tooltip can be set to all objects
@@ -575,6 +575,7 @@ class Ui_MainWindow(object):
         self.lineEdit_11.setFont(font4)
         self.lineEdit_12.setFont(font4)
         self.lineEdit_13.setFont(font4) 
+        self.lineEdit_14.setFont(font4)
 
 
 
@@ -768,8 +769,15 @@ class Ui_MainWindow(object):
         #
 
     def selectionchange1 (self):
-        pass
-
+        lens = self.cb1.currentIndex()
+        if lens==1:
+            self.horizontalSlider7.setEnabled(False)
+            self.lineEdit_8.setEnabled(False)
+            
+        else:
+            self.horizontalSlider7.setEnabled(True)
+            self.lineEdit_8.setEnabled(True)
+            
     def selectionchange2 (self):
         pass
 
@@ -778,7 +786,66 @@ class Ui_MainWindow(object):
 
     def selectionchange4 (self):
         pass
+    
+    
+    def check_Rodlength(self):
+        DLD = float(self.lineEdit_14.text())
+        DLD = round(DLD,1) 
+        
+        LL = float(self.lineEdit_7.text())
+        LL = round(LL,1)
+        
+        
+        if LL > 40:
+            Thickness = float(self.lineEdit_5.text())+5
+            Thickness = round(Thickness,1)
+        
+        else:
+            Thickness = float(self.lineEdit_5.text())+2*5
+            Thickness = round(Thickness,1)
+            
+        Rodlength_needed=DLD+LL+7.5-2        
 
+
+        if Rodlength_needed>90 or DLD-17<Thickness:
+            self.cb3.model().item(7).setEnabled(False)
+        else:
+            self.cb3.model().item(7).setEnabled(True) 
+
+        if Rodlength_needed>110 or DLD-17<Thickness:
+            self.cb3.model().item(6).setEnabled(False)
+        else:
+            self.cb3.model().item(6).setEnabled(True) 
+            
+        if Rodlength_needed>125 or DLD-17<Thickness:
+            self.cb3.model().item(1).setEnabled(False)
+        else:
+            self.cb3.model().item(1).setEnabled(True) 
+    
+        if Rodlength_needed>150 or DLD-17<Thickness:
+            self.cb3.model().item(2).setEnabled(False)
+        else:
+            self.cb3.model().item(2).setEnabled(True)
+            
+        if Rodlength_needed>170 or DLD-17<Thickness:
+            self.cb3.model().item(3).setEnabled(False)
+        else:
+            self.cb3.model().item(3).setEnabled(True)
+            
+        if Rodlength_needed>200 or DLD-17<Thickness:
+            self.cb3.model().item(5).setEnabled(False)
+        else:
+            self.cb3.model().item(5).setEnabled(True)
+            
+        if Rodlength_needed>235 or DLD-17<Thickness:
+            self.cb3.model().item(4).setEnabled(False)
+        else:
+            self.cb3.model().item(4).setEnabled(True)
+            
+        if Rodlength_needed>260 or DLD-17<Thickness:
+            self.cb3.setEnabled(False)
+        else:
+            self.cb3.setEnabled(True)
 ########################################################################
         
     def on_horizontal_slider1(self, val_X):                                                  # connection on_horizontal_slider
@@ -789,7 +856,9 @@ class Ui_MainWindow(object):
         #self.Darstellung(val_X)
         #self.label_6.setText(_translate("MainWindow",str(val_X), None))     # display in the label_6 (red)
 
-        print( "on_horizontal_slider1" )                                                       # displayed on View repport 
+        print( "on_horizontal_slider1" )   
+                                                    # displayed on View repport
+
 
     def on_horizontal_slider2(self, val_Y):                                                  # connection on_horizontal_slider
         #
@@ -834,7 +903,8 @@ class Ui_MainWindow(object):
         self.affectation_LaserLength(val_LaserLength)
         #self.Darstellung(val_LaserDiameter)
 
-        print( "on_horizontal_slider6" )                                                       # displayed on View repport  
+        print( "on_horizontal_slider6" )  
+        self.check_Rodlength()                                                     # displayed on View repport  
 
     def on_horizontal_slider7(self, val_DisLaserLens):                                                  # connection on_horizontal_slider
         #
@@ -843,7 +913,8 @@ class Ui_MainWindow(object):
         self.affectation_DisLaserLens(val_DisLaserLens)
         #self.Darstellung(val_DisLaserLens)
 
-        print( "on_horizontal_slider7" )                                                       # displayed on View repport     
+        print( "on_horizontal_slider7" )  
+        self.check_Rodlength()                                                     # displayed on View repport     
 
 
     def on_horizontal_slider8(self, val_Wavelength):                                                  # connection on_horizontal_slider
@@ -911,7 +982,8 @@ class Ui_MainWindow(object):
         self.affectation_DistLaserDOE(val_DistLaserDOE)
         #self.Darstellung(val_WorkingDistance)
 
-        print( "on_horizontal_slider14" )  
+        print( "on_horizontal_slider14" ) 
+        self.check_Rodlength()
 
 
 
@@ -1146,11 +1218,11 @@ class Ui_MainWindow(object):
 
 
     def save_parameters(self, filename):
-        Width, Height, DL, Thickness, LHD, RodLength, LensBin, LL, DLL, Mount = self.params
+        Width, Height, DL, Thickness, LHD, RodLength, LensBin, LL, DLL, Mount, DLD = self.params
         with open(filename,"w", newline='') as csvdatei:
             csv_writer = csv.writer(csvdatei, delimiter=';')
-            csv_writer.writerow(["DOE Hole Width","DOE Hole Height","Lens Diameter","Lens Holder Depth","Laser Diameter","Rod Length","Lens","Laser Length", "Dist. Laser Lens","mounting"])
-            csv_writer.writerow([Height,Width,DL,Thickness,LHD,RodLength,LensBin,LL,DLL,Mount])
+            csv_writer.writerow(["DOE Hole Width","DOE Hole Height","Lens Diameter","Lens Holder Depth","Laser Diameter","Rod Length","Lens","Laser Length", "Dist. Laser Lens","mounting", "Dist. Laser DOE"])
+            csv_writer.writerow([Height,Width,DL,Thickness,LHD,RodLength,LensBin,LL,DLL,Mount,DLD])
 
 
 
@@ -1170,10 +1242,12 @@ class Ui_MainWindow(object):
         LL = round(LL,1)
         DLL = float(self.lineEdit_8.text())
         DLL = round(DLL,1)
+        DLD = float(self.lineEdit_14.text())
+        DLD = round(DLD,1)
         #DOED=25.4
         RodIndex=self.cb3.currentIndex()
         if RodIndex==0:
-            RodLength = 200
+            RodLength = 260
         elif RodIndex==1:
             RodLength = 125
         elif RodIndex==2:
@@ -1181,7 +1255,16 @@ class Ui_MainWindow(object):
         elif RodIndex==3:
             RodLength = 170
         elif RodIndex==4:
-            RodLength = 235 
+            RodLength = 235
+        elif RodIndex==5:
+            RodLength = 200
+        elif RodIndex==6:
+            RodLength = 110
+        elif RodIndex==7:
+            RodLength = 90
+
+            
+            
 
         Mount=self.cb4.currentIndex()
   
@@ -1206,6 +1289,7 @@ class Ui_MainWindow(object):
                 LL,
                 DLL,
                 Mount,
+                DLD
                 )
         params_changed = not (self.params == new_params)
         self.params = new_params

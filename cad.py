@@ -319,11 +319,12 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
                     LL=float(row[7])
                     DLL= float(row[8])
                     Mount = int(row[9])
+                    DLD = float(row[10])
 
                 zeilennummer += 1
 
     elif params is not None:
-        Width, Height, DL, Thickness, LHD, RodLength, LensBin, LL, DLL, Mount = params
+        Width, Height, DL, Thickness, LHD, RodLength, LensBin, LL, DLL, Mount, DLD = params
     else:
         raise TypeError('Either csv_filename or params must be given')
             
@@ -490,9 +491,15 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     ###Laser-Holder1############################################################
     
     LaserHolder1 = make_holder(LHD,15)
+    
+    if LL < 40:    
+        TranslationLaserHolder1=(0,0,RodLength-53)
+        LaserHolder1.translate(TranslationLaserHolder1)
         
-    TranslationLaserHolder1=(0,0,RodLength-31-LL)
-    LaserHolder1.translate(TranslationLaserHolder1)
+    else:
+        TranslationLaserHolder1=(0,0,RodLength-13-LL)
+        LaserHolder1.translate(TranslationLaserHolder1)
+        
         
     Holder1 = App.ActiveDocument.addObject("Part::Feature", "LaserHolder1")
     Holder1.Shape=LaserHolder1
@@ -504,10 +511,17 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     ###Laser-Holder2############################################################
     
     LaserHolder2 = LaserHolder1.copy()
+    
+    if LL < 40:
+        TranslationLaserHolder2=(0,0,53-37.5)
+        #TranslationLaserHolder2=(0,0,-(RodLength-31-LL)+RodLength-37.5)
+        LaserHolder2.translate(TranslationLaserHolder2)
+    
+    else:
         
-    TranslationLaserHolder2=(0,0,31+LL-37.5)
-    #TranslationLaserHolder2=(0,0,-(RodLength-31-LL)+RodLength-37.5)
-    LaserHolder2.translate(TranslationLaserHolder2)
+        TranslationLaserHolder2=(0,0,13+LL-37.5)
+        #TranslationLaserHolder2=(0,0,-(RodLength-31-LL)+RodLength-37.5)
+        LaserHolder2.translate(TranslationLaserHolder2)
         
     Holder2 = App.ActiveDocument.addObject("Part::Feature", "LaserHolder2")
     Holder2.Shape=LaserHolder2
