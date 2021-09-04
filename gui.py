@@ -1268,6 +1268,13 @@ class Ui_MainWindow(object):
         text=("Suggested Laser: " + Name + "\nWavelength: " + wavelength + " nm\nPower: " + power + " mW\nDiameter: " + diameter + " mm\nLenght: " + length + " mm")
         print(text)
         self.label_00.setText(_translate("MainWindow",str(text), None))     # display in the label_00
+        
+        self.lineEdit_6.setText(diameter)
+        self.lineEdit_7.setText(length)
+        
+        self.horizontalSlider5.setValue(int(lmodule[0][3])*10) 
+        self.horizontalSlider6.setValue(int(lmodule[0][4])*10) 
+
 
 
 
