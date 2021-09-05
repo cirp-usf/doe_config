@@ -227,7 +227,7 @@ class Ui_MainWindow(object):
 
         #        section horizontalSlider 
         self.horizontalSlider7 = QtGui.QSlider(self.widget)                                  # create horizontalSlider
-        self.horizontalSlider7.setRange(500, 1000)                                                 #value*10 to get to get one decimal digit
+        self.horizontalSlider7.setRange(100, 1000)                                                 #value*10 to get to get one decimal digit
         self.horizontalSlider7.setGeometry(QtCore.QRect(205, 463, 230, 18))                     # coordinates position
         self.horizontalSlider7.setOrientation(QtCore.Qt.Horizontal)                          # orientation Horizontal
         self.horizontalSlider7.setInvertedAppearance(False)                                  # displacement rigth to left or left to rigth value "True" or "False"
@@ -428,7 +428,7 @@ class Ui_MainWindow(object):
         self.lineEdit_8 = QtGui.QLineEdit(self.widget)                                      # create object lineEdit_2
         self.lineEdit_8.setGeometry(QtCore.QRect(465, 461, 120, 22))                          # coordinates position
         self.lineEdit_8.setObjectName(_fromUtf8("lineEdit_8"))                              # name of object
-        self.lineEdit_8.setText("50.0")                                                        # text by default
+        self.lineEdit_8.setText("10.0")                                                        # text by default
         self.lineEdit_8.returnPressed.connect(self.on_lineEdit_8_Pressed)                  # connect on def "on_lineEdit_2_Pressed" for execute actionn   # for validate the data with press on return touch
         #self.lineEdit_6.textChanged.connect(self.on_lineEdit_8_Pressed)                     # connect on def "on_lineEdit_2_Pressed" for execute actionn   # with tips key char by char
                                                                                             # a tooltip can be set to all objects
@@ -795,58 +795,140 @@ class Ui_MainWindow(object):
         LL = float(self.lineEdit_7.text())
         LL = round(LL,1)
         
+        DLL = float(self.lineEdit_8.text())
+        DLL = round(DLL,1)
+        
+        Thickness = float(self.lineEdit_5.text())
+        Thickness = round(Thickness,1)
+        
+        lock=0
+        
+        RodIndex=self.cb3.currentIndex()       
         
         if LL > 40:
-            Thickness = float(self.lineEdit_5.text())+5
-            Thickness = round(Thickness,1)
+            Thickness_new = float(self.lineEdit_5.text())+5
+            Thickness_new = round(Thickness,1)
         
         else:
-            Thickness = float(self.lineEdit_5.text())+2*5
-            Thickness = round(Thickness,1)
+            Thickness_new = float(self.lineEdit_5.text())+2*5
+            Thickness_new = round(Thickness,1)
             
         Rodlength_needed=DLD+LL+7.5-2        
 
 
-        if Rodlength_needed>90 or DLD-17<Thickness:
+        if Rodlength_needed>90 or DLD-17<Thickness_new:
             self.cb3.model().item(7).setEnabled(False)
-        else:
-            self.cb3.model().item(7).setEnabled(True) 
-
-        if Rodlength_needed>110 or DLD-17<Thickness:
-            self.cb3.model().item(6).setEnabled(False)
-        else:
-            self.cb3.model().item(6).setEnabled(True) 
+            print(RodIndex)
             
-        if Rodlength_needed>125 or DLD-17<Thickness:
-            self.cb3.model().item(1).setEnabled(False)
+            if RodIndex==7:
+                lock=1
+            else:
+                pass
         else:
-            self.cb3.model().item(1).setEnabled(True) 
+            self.cb3.model().item(7).setEnabled(True)
+            
+
+        if Rodlength_needed>110 or DLD-17<Thickness_new:
+            self.cb3.model().item(6).setEnabled(False)
+            
+            if RodIndex==6:
+                lock=1
+            else:
+                pass
+        else:
+            self.cb3.model().item(6).setEnabled(True)
+           
+            
+        if Rodlength_needed>125 or DLD-17<Thickness_new:
+            self.cb3.model().item(1).setEnabled(False)
+            
+            if RodIndex==1:
+                lock=1
+            else:
+                pass
+            
+        else:
+            self.cb3.model().item(1).setEnabled(True)
+            
     
-        if Rodlength_needed>150 or DLD-17<Thickness:
+        if Rodlength_needed>150 or DLD-17<Thickness_new:
             self.cb3.model().item(2).setEnabled(False)
+            
+            if RodIndex==2:
+                lock=1
+            else:
+                pass
+            
         else:
             self.cb3.model().item(2).setEnabled(True)
             
-        if Rodlength_needed>170 or DLD-17<Thickness:
+            
+        if Rodlength_needed>170 or DLD-17<Thickness_new:
             self.cb3.model().item(3).setEnabled(False)
+            
+            if RodIndex==3:
+                lock=1
+            else:
+                pass
+            
         else:
             self.cb3.model().item(3).setEnabled(True)
+           
             
-        if Rodlength_needed>200 or DLD-17<Thickness:
+        if Rodlength_needed>200 or DLD-17<Thickness_new:
             self.cb3.model().item(5).setEnabled(False)
+            
+            if RodIndex==5:
+                lock=1
+            else:
+                pass
+           
         else:
             self.cb3.model().item(5).setEnabled(True)
             
-        if Rodlength_needed>235 or DLD-17<Thickness:
+            
+        if Rodlength_needed>235 or DLD-17<Thickness_new:
             self.cb3.model().item(4).setEnabled(False)
+
+            if RodIndex==4:
+                lock=1
+            else:
+                pass
         else:
             self.cb3.model().item(4).setEnabled(True)
             
-        if Rodlength_needed>260 or DLD-17<Thickness:
-            self.cb3.setEnabled(False)
+        if Rodlength_needed>260 or DLD-17<Thickness_new or DLL<Thickness/2+5 or DLD-17<DLL+Thickness/2+5 or lock==1:
+            #self.cb3.setEnabled(False)
+            self.pushButton_3.setEnabled(False)
+            self.pushButton_4.setEnabled(False)
+            lock=0
+        elif Rodlength_needed<260 and DLD-17>Thickness_new and DLL>Thickness/2+5 and DLD-17>DLL+Thickness/2+5 and lock==0:
+            #self.cb3.setEnabled(True)
+            self.pushButton_3.setEnabled(True)
+            self.pushButton_4.setEnabled(True)
+            lock=0
         else:
-            self.cb3.setEnabled(True)
-########################################################################
+            pass
+        lock=0
+ 
+        '''       
+        if DLL<Thickness/2+5:
+            self.pushButton_3.setEnabled(False)
+            self.pushButton_4.setEnabled(False)
+
+            
+        elif DLD-17<DLL+Thickness/2+5:
+            self.pushButton_3.setEnabled(False)
+            self.pushButton_4.setEnabled(False)
+
+        elif:
+            self.pushButton_3.setEnabled(True)
+            self.pushButton_4.setEnabled(True)
+        else:
+            pass
+        '''
+            
+        ########################################################################
         
     def on_horizontal_slider1(self, val_X):                                                  # connection on_horizontal_slider
         #
@@ -885,7 +967,8 @@ class Ui_MainWindow(object):
         self.affectation_LensDiameter(val_HolderDepth)
         #self.Darstellung(val_HolderDepth)
 
-        print( "on_horizontal_slider4" )                                                       # displayed on View repport     
+        print( "on_horizontal_slider4" )
+        self.check_Rodlength()                                                       # displayed on View repport     
 
     def on_horizontal_slider5(self, val_LaserDiameter):                                                  # connection on_horizontal_slider
         #

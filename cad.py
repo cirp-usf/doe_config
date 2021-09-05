@@ -428,7 +428,9 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
         
         LensHolder = make_holder(DL,Thickness)
         
-        TranslationLensHolder=(0,0,83-DLL)
+        #TranslationLensHolder=(0,0,83-DLL)
+        #TranslationLensHolder=(0,0,DLD+5-22-DLL-1.5)
+        TranslationLensHolder=(0,0,DLD+5-22-DLL-Thickness/2)
         LensHolder.translate(TranslationLensHolder)
         
         Holder1 = App.ActiveDocument.addObject("Part::Feature", "LensHolder")
@@ -476,7 +478,8 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
         fused2.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), -90)
         #TranslationLens=(0,0,84.75+DL-16)
         #TranslationLens=(0,0,84.75+DL-2-DLL)
-        TranslationLens=(0,0,84.75+DL-1-0.1*DL-DLL)
+        #TranslationLens=(0,0,84.75+DL-1-0.1*DL-DLL)
+        TranslationLens=(0,0,84.75+DL-1-0.1*DL-DLL+DLD-100-Thickness/2)
         fused2.translate(TranslationLens)
 
         #Display
@@ -493,11 +496,13 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     LaserHolder1 = make_holder(LHD,15)
     
     if LL < 40:    
-        TranslationLaserHolder1=(0,0,RodLength-53)
+        #TranslationLaserHolder1=(0,0,RodLength-53)
+        TranslationLaserHolder1=(0,0,DLD-20+LL-22)
         LaserHolder1.translate(TranslationLaserHolder1)
         
     else:
-        TranslationLaserHolder1=(0,0,RodLength-13-LL)
+        #TranslationLaserHolder1=(0,0,RodLength-13-LL)
+        TranslationLaserHolder1=(0,0,DLD-20+18)
         LaserHolder1.translate(TranslationLaserHolder1)
         
         
@@ -572,7 +577,8 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     BossExtrude8=BossExtrude7.cut(Drilling2)
 
     BossExtrude8.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 1, 0), 180)
-    TranslationLaser=(0,0,RodLength-22.5)
+    #TranslationLaser=(0,0,RodLength-22.5)
+    TranslationLaser=(0,0,DLD+5+LL-22)
     BossExtrude8.translate(TranslationLaser)
 
 
@@ -627,7 +633,8 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     PartBossExtrude4.read(source)   
     PartBossExtrude4.rotate(Base.Vector(0, 0, 0),Base.Vector(1, 0, 0), 90)
     PartBossExtrude4.rotate(Base.Vector(0, 0, 0),Base.Vector(0, 0, 1), 90)
-    clampingholderTranslation=(20.5,0,78-DLL)
+    #clampingholderTranslation=(20.5,0,78-DLL)
+    clampingholderTranslation=(20.5,0,78-DLL+DLD-100-Thickness/2)
     PartBossExtrude4.translate(clampingholderTranslation)
 
     ###Clamping_Holder1##########################################################
@@ -712,7 +719,7 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
         PartBossExtrude15.translate(clampingholderTranslation)
         
         #Display
-        clamping_holder12 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder11")
+        clamping_holder12 = App.ActiveDocument.addObject("Part::Feature", "clamping_holder12")
         clamping_holder12.Shape=PartBossExtrude15
         clamping_holder12.ViewObject.ShapeColor = (1.0,0.0,0.0)
     ###Clamping_Holder12_End#######################################################         
@@ -725,7 +732,8 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     ###Clamping_Holder5##########################################################
     
     PartBossExtrude8 = PartBossExtrude4.copy()
-    clampingholderTranslation=(0,0,-(78-DLL)+RodLength-19.5)
+    #clampingholderTranslation=(0,0,-(78-DLL)+RodLength-19.5)
+    clampingholderTranslation=(0,0,-(78-DLL)+RodLength-19.5-DLD+100+Thickness/2)
     PartBossExtrude8.translate(clampingholderTranslation)
         
     #Display
@@ -736,7 +744,7 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     ###Clamping_Holder6##########################################################
     
     PartBossExtrude9 = PartBossExtrude4.copy()
-    clampingholderTranslation=(-2*20.5,0,-(78-DLL)+RodLength-19.5)
+    clampingholderTranslation=(-2*20.5,0,-(78-DLL)+RodLength-19.5-DLD+100+Thickness/2)
     PartBossExtrude9.translate(clampingholderTranslation)
         
     #Display
@@ -747,7 +755,7 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     ###Clamping_Holder7##########################################################
     
     PartBossExtrude10 = PartBossExtrude4.copy()
-    clampingholderTranslation=(-20.5,20.5,-(78-DLL)+RodLength-19.5)
+    clampingholderTranslation=(-20.5,20.5,-(78-DLL)+RodLength-19.5-DLD+100+Thickness/2)
     PartBossExtrude10.translate(clampingholderTranslation)
         
     #Display
@@ -758,7 +766,7 @@ def make_parts(*, csv_filename=None, params=None):						#Plot Part
     ###Clamping_Holder8##########################################################
     
     PartBossExtrude11 = PartBossExtrude4.copy()
-    clampingholderTranslation=(-20.5,-20.5,-(78-DLL)+RodLength-19.5)
+    clampingholderTranslation=(-20.5,-20.5,-(78-DLL)+RodLength-19.5-DLD+100+Thickness/2)
     PartBossExtrude11.translate(clampingholderTranslation)
         
     #Display
