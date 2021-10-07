@@ -1422,12 +1422,12 @@ class Ui_MainWindow(object):
 
         #filename = "C:/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei.csv"
         #csvdatei = open('/Users/Steffen/AppData/Roaming/FreeCAD/Macro/testdatei.csv',"r",encoding="latin-1")
-        csvdatei = open(csv_filename,"w", newline='')
-        csv_writer = csv.writer(csvdatei, delimiter=';')
+        ##csvdatei = open(csv_filename,"w", newline='')
+        ##csv_writer = csv.writer(csvdatei, delimiter=';')
         #csv_reader_object = csv.reader(csvdatei)
-        csv_writer.writerow(["DOE Hole Width","DOE Hole Height","Lens Diameter","Lens Holder Depth","Laser Diameter","Rod Length","Lens","Laser Length","Dist. Laser Lens","comp. location","file format","mounting"])
-        csv_writer.writerow([6,6,18,5,16,200,1,50,50,"","",0])
-        csvdatei.close()    
+        ##csv_writer.writerow(["DOE Hole Width","DOE Hole Height","Lens Diameter","Lens Holder Depth","Laser Diameter","Rod Length","Lens","Laser Length","Dist. Laser Lens","comp. location","file format","mounting"])
+        ##csv_writer.writerow([6,6,18,5,16,200,1,50,50,"","",0])
+        ##csvdatei.close()    
 
 
 
@@ -1439,10 +1439,12 @@ class Ui_MainWindow(object):
         self.lineEdit_5.setText("2.0")                                                        # gives the value "0" to the lineEdit_2
         self.lineEdit_6.setText("10.0")                                                        # gives the value "0" to the lineEdit_1
         self.lineEdit_7.setText("22.0")                                                        # gives the value "0" to the lineEdit_2
-        self.lineEdit_8.setText("50.0")                                                        # gives the value "0" to the lineEdit_1
+        self.lineEdit_8.setText("10.0")                                                        # gives the value "0" to the lineEdit_1
         self.lineEdit_11.setText("10.0")                                                        # gives the value "0" to the lineEdit_1
         self.lineEdit_12.setText("1.0")                                                        # gives the value "0" to the lineEdit_1
         self.lineEdit_13.setText("10.0")                                                        # gives the value "0" to the lineEdit_1
+        self.lineEdit_14.setText("50.0")                                                        # gives the value "0" to the lineEdit_1
+
 
         self.horizontalSlider1.setValue(10)                                                   # gives the value "0" to the horizontalSlider
         self.horizontalSlider2.setValue(10)                                                   # gives the value "0" to the horizontalSlider  
@@ -1450,19 +1452,25 @@ class Ui_MainWindow(object):
         self.horizontalSlider4.setValue(20)                                                   # gives the value "0" to the horizontalSlider  
         self.horizontalSlider5.setValue(100)                                                   # gives the value "0" to the horizontalSlider
         self.horizontalSlider6.setValue(220)                                                   # gives the value "0" to the horizontalSlider  
-        self.horizontalSlider7.setValue(500)                                                   # gives the value "0" to the horizontalSlider
+        self.horizontalSlider7.setValue(100)                                                   # gives the value "0" to the horizontalSlider
         self.horizontalSlider10.setValue(100)                                                   # gives the value "0" to the horizontalSlider
         self.horizontalSlider11.setValue(10)                                                   # gives the value "0" to the horizontalSlider  
         self.horizontalSlider12.setValue(100)                                                   # gives the value "0" to the horizontalSlider
+        self.horizontalSlider13.setValue(50)                                                   # gives the value "0" to the horizontalSlider
+        self.horizontalSlider14.setValue(500)                                                   # gives the value "0" to the horizontalSlider
 
 
 
         self.cb1.setCurrentText("yes")   
         self.cb2.setCurrentText(".stl")  
-        self.cb3.setCurrentText("200")
+        self.cb3.setCurrentText("260")
         self.cb4.setCurrentText("2x, 180°")
         print( "Reset")
-        make_parts(csv_filename)        
+        #make_parts(csv_filename)
+        #changed = self.read_parameters()
+        #if changed:
+            # Only recompute parts if parameters changed
+        make_parts(params=self.params)
 
 
     def on_pushButton_4_clicked(self):    # Button Apply                                    # connection on_pushButton_4_clicked
